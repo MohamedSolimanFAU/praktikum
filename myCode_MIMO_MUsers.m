@@ -23,7 +23,7 @@ bits_per_symb  = [2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 1000;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;

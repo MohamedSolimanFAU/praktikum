@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 30; % in dB
+EbNo      = 0:3:30; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -78,22 +78,27 @@ for i_user = 1:N_user
     end
 end
 
-tx_bits   = cell(N_user,1);
-tx        = cell(N_user,1);
-SymbTab   = cell(N_user,1);
+tx_bits    = cell(N_user, 1);
+tx_symbols = cell(N_user, 1);
+tx_aug     = cell(N_user, 1);
+tx         = cell(N_user, 1);
+SymbTab    = cell(N_user, 1);
 
 
 for i_user = 1:N_user
     tx_bits{i_user} = randi([0 1], 1, num_bits(i_user));
     % Bit mapping
-    [tx{i_user}, SymbTab{i_user}] = bitMap(tx_bits{i_user}, bits_per_symb(i_user));
-    for nt = 1:Nt
-        tx_bits{i_user}(nt,:)  = tx_bits{i_user};
-        tx{i_user}(nt,:)       = tx{i_user};
+    [tx_symbols{i_user}, SymbTab{i_user}] = bitMap(tx_bits{i_user}, bits_per_symb(i_user));
+    if bits_per_symb(i_user) > 1
+        tx_aug{i_user} = [real(tx_symbols{i_user}) ; imag(tx_symbols{i_user})];
     end
+    
+    tx_bits{i_user} = repmat(tx_bits{i_user}, Nt, 1);
+    tx{i_user}      = repmat(tx_aug{i_user}, Nt, 1);
 end
 
-tx_sc  = cell(N_user,1);
+tx_sc  = cell(N_user, 1);
+check  = cell(N_user, 1);
 count  = 1;
 % check = cell(1, N_user);
 tic
@@ -124,7 +129,7 @@ for i_ebNo = 1:length(EbNo)
         for i = 1:Scfdma.N
             for i_user = 1:N_user
                 for j_user = 1:N_user 
-                    check(i_user, j_user, i) = G{i_user}(:,:,i)' * H_ch{i_user, j_user}(:,:,i) * V{i_user}(:,:,i);
+                    check{i_user, j_user}(:,:,i) = G{i_user}(:,:,i)' * H_all{i_user, j_user}(:,:,i) * V{i_user}(:,:,i);
                 end
             end
         end
@@ -132,7 +137,7 @@ for i_ebNo = 1:length(EbNo)
 %         error = (check(i_user, i_user, :) - 1)^2 + sum(check(i_user, i_user, :)^2) + norm(G{i_user}(:,:,i))^2*VarN(1);
         
         for i_user = 1:N_user
-            tx_sc{i_user} = scfdma_tx(tx{i_user}, Scfdma, V{i_user});
+            tx_sc{i_user} = scfdma_txWL(tx{i_user}, Scfdma, V{i_user});
         end
         %% Transmission
         
@@ -156,7 +161,7 @@ for i_ebNo = 1:length(EbNo)
 %                 check(:,:,n) = g(:,:,n)*H_ch{i_user}(:,:,n);
 %             end
             
-            rx{i_user}       = scfdma_rx(rx_sc{i_user}, Scfdma, G{i_user});
+            rx{i_user}       = scfdma_rxWL(rx_sc{i_user}, Scfdma, G{i_user});
             
             for inr = 1:Nr
                 rx_bits{i_user}(inr,:)   = myDemapping(rx{i_user}(inr,:), bits_per_symb(i_user));

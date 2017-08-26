@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 0:3:30; % in dB
+EbNo      = 30; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -80,7 +80,6 @@ end
 
 tx_bits    = cell(N_user, 1);
 tx_symbols = cell(N_user, 1);
-tx_aug     = cell(N_user, 1);
 tx         = cell(N_user, 1);
 SymbTab    = cell(N_user, 1);
 
@@ -88,23 +87,17 @@ SymbTab    = cell(N_user, 1);
 for i_user = 1:N_user
     tx_bits{i_user} = randi([0 1], 1, num_bits(i_user));
     % Bit mapping
-    [tx_symbols{i_user}, SymbTab{i_user}] = bitMap(tx_bits{i_user}, bits_per_symb(i_user));
-    if bits_per_symb(i_user) > 1
-        tx_aug{i_user} = [real(tx_symbols{i_user}) ; imag(tx_symbols{i_user})];
-    end
-    
-    tx_bits{i_user} = repmat(tx_bits{i_user}, Nt, 1);
-    tx{i_user}      = repmat(tx_aug{i_user}, Nt, 1);
+    [tx{i_user}, SymbTab{i_user}] = bitMap(tx_bits{i_user}, bits_per_symb(i_user));
 end
 
 tx_sc  = cell(N_user, 1);
 check  = cell(N_user, 1);
 count  = 1;
-% check = cell(1, N_user);
+
 tic
 for i_ebNo = 1:length(EbNo)
-    numBits    = zeros(Nr, N_user);
-    bitError   = zeros(Nr, N_user);
+    numBits    = zeros(1, N_user);
+    bitError   = zeros(1, N_user);
     
     for i_ch = 1:n_ch
         %% Transmitter
@@ -124,8 +117,10 @@ for i_ebNo = 1:length(EbNo)
             end
         end
         
+        % apply precoding
         [V, G] = myPrecodingWL(H_all, H_ch, VarN(:, i_ebNo), Scfdma.N, WL);
         
+        %H_ov
         for i = 1:Scfdma.N
             for i_user = 1:N_user
                 for j_user = 1:N_user 
@@ -133,9 +128,8 @@ for i_ebNo = 1:length(EbNo)
                 end
             end
         end
-        
-%         error = (check(i_user, i_user, :) - 1)^2 + sum(check(i_user, i_user, :)^2) + norm(G{i_user}(:,:,i))^2*VarN(1);
-        
+
+        % transmitter
         for i_user = 1:N_user
             tx_sc{i_user} = scfdma_txWL(tx{i_user}, Scfdma, V{i_user});
         end
@@ -151,33 +145,30 @@ for i_ebNo = 1:length(EbNo)
         rx_bits  = cell(N_user,1);
         
         for i_user = 1:N_user
-            
-%             for n = 1:Scfdma.N
-% %                 H_users = 0;
-% %                 for j_user = 1:N_user
-% %                     H_users = H_users + H_ch{i_user,j_user}(:,:,n)'*H_ch{i_user,j_user}(:,:,n);
-% %                 end
-%                 g(:,:,n) = (H_ch{i_user}(:,:,n)'*H_ch{i_user}(:,:,n) + VarN(i_user, i_ebNo)*eye(Nr))^-1 * H_ch{i_user}(:,:,n)';
-%                 check(:,:,n) = g(:,:,n)*H_ch{i_user}(:,:,n);
-%             end
-            
             rx{i_user}       = scfdma_rxWL(rx_sc{i_user}, Scfdma, G{i_user});
+            rx_bits{i_user}  = myDemapping(rx{i_user}, bits_per_symb(i_user));
             
-            for inr = 1:Nr
-                rx_bits{i_user}(inr,:)   = myDemapping(rx{i_user}(inr,:), bits_per_symb(i_user));
-                bitError(inr, i_user)    = bitError(inr, i_user) + sum(xor(tx_bits{i_user}(inr,:), rx_bits{i_user}(inr,:)));
-                numBits(inr, i_user)     = numBits(inr, i_user) + length(rx_bits{i_user}(inr,:));
-            end
+            bitError(1, i_user)    = bitError(1, i_user) + sum(xor(tx_bits{i_user}, rx_bits{i_user}));
+            numBits(1, i_user)     = numBits(1, i_user) + length(rx_bits{i_user});
         end
     end
-    if Nr == 1
-        BER(:, i_ebNo) = bitError./numBits;
-    else
-        BER(:, i_ebNo) = sum(bitError)./sum(numBits);
-    end
+    BER(:, i_ebNo) = bitError./numBits;
 end
 toc
 %% Plotting BER
+
+figure;
+plot(tx_bits{1},'ro');
+hold on
+plot(rx_bits{1},'b*');
+
+figure;
+plot(tx_bits{2},'ro');
+hold on
+plot(rx_bits{2},'b*');
+
+
+
 figure;
 for i = 1:N_user
     semilogy(EbNo, BER(i,:), 'o-', 'Linewidth', 2);

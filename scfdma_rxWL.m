@@ -11,38 +11,50 @@ N_scSymb  = Scfdma.N_scSymb;
 N_x = Scfdma.N + Scfdma.l_cp;
 
 Nr      = size(G, 1);
-Rx      = zeros(Nr, M*N_scSymb);
-Rx_x    = zeros(Nr, N*N_scSymb);
-rx_x    = zeros(Nr, N*N_scSymb);
-rx      = zeros(Nr, N_scSymb*M);
-Gh_com  = zeros(Nr, N);
+rx_x    = zeros(Nr/2, N*N_scSymb);
+Rx_x    = zeros(Nr/2, N*N_scSymb);
+Rx_aug  = zeros(Nr, N*N_scSymb);
+Rx_fir  = zeros(Nr/2, N*N_scSymb);
+Rx      = zeros(Nr/2, M*N_scSymb);
+Rx_com  = zeros(1, M*N_scSymb);
 
-rx_cp   = [real(rx_sc); imag(rx_sc)];
+rx      = zeros(1, M*N_scSymb);
+
+
+% rx_cp   = [real(rx_sc); imag(rx_sc)];
 
 % G' in switch case will be calculated
-NG      = size(G, 1);
-switch NG
-    case 1
-        G = squeeze(G)';
-    case 2
-        G = squeeze(permute(conj(G),[2 1 3]));
-    otherwise
-        G = squeeze(permute(conj(G),[2 1 3]));
-end
+% NG      = size(G, 1);
+% switch NG
+%     case 1
+%         G = squeeze(G)';
+%     case 2
+%         G = squeeze(permute(conj(G),[2 1 3]));
+%     otherwise
+%         G = squeeze(permute(conj(G),[2 1 3]));
+% end
 
-for i = 1:N
-    for k = 1:Nr
-        Gh_com(k,i) = G(1,k,i) + 1i * G(2,k,i);
-    end
-end
+% for i = 1:N
+%     for k = 1:Nr
+%         Gh_com(k,i) = G(1,k,i) + 1i * G(2,k,i);
+%     end
+% end
 
 for i_bl = 0:N_scSymb-1
-    rx_x(:, i_bl*N+(1:N))   = rx_cp(:, i_bl*N_x + (l_cp + 1:N_x));
+    rx_x(:, i_bl*N+(1:N))   = rx_sc(:, i_bl*N_x + (l_cp + 1:N_x));
 
-    Rx_x(:, i_bl*N + (1:N)) = Gh_com .* fft(rx_x(:, i_bl*N + (1:N)), N, 2)./sqrt(N);
+    Rx_x(:, i_bl*N + (1:N)) = fft(rx_x(:, i_bl*N + (1:N)), N, 2)./sqrt(N);
     
-    Rx(:, i_bl*M + (1:M))   = Rx_x(:, i_bl*N + nu_0 +(1:M));
+    Rx_aug(:, i_bl*N + (1:N)) = [real(Rx_x(:, i_bl*N + (1:N))); imag(Rx_x(:, i_bl*N + (1:N)))];
+    
+    for idx = 1:N
+        Rx_fir(:, i_bl*N + idx) = G(:,:,idx)' * Rx_aug(:, i_bl*N + idx);
+    end
+    
+    Rx(:, i_bl*M + (1:M))   = Rx_fir(:, i_bl*N + nu_0 +(1:M));
+    
+    Rx_com(:, i_bl*M + (1:M)) = Rx(1, i_bl*M + (1:M)) + 1i*Rx(2, i_bl*M + (1:M));
 
-    rx(:, i_bl*M + (1:M))   = ifft(Rx(:, i_bl*M + (1:M)), M, 2).* sqrt(M);
+    rx(:, i_bl*M + (1:M))   = ifft(Rx_com(:, i_bl*M + (1:M)), M, 2).* sqrt(M);
 end
 end

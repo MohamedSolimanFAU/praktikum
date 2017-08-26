@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 30; % in dB
+EbNo      = 0:3:30; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,7 +23,7 @@ bits_per_symb  = [2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 100;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -73,10 +73,10 @@ for i_user = 1:N_user
     tx_bits{i_user} = randi([0 1], 1, num_bits(i_user));
     % Bit mapping
     [tx{i_user}, SymbTab{i_user}] = bitMap(tx_bits{i_user}, bits_per_symb(i_user));
-    for nt = 1:Nt
-        tx_bits{i_user}(nt,:)  = tx_bits{i_user};
-        tx{i_user}(nt,:)       = tx{i_user};
-    end
+%     for nt = 1:Nt
+%         tx_bits{i_user}(nt,:)  = tx_bits{i_user};
+%         tx{i_user}(nt,:)       = tx{i_user};
+%     end
 end
 
 tx_sc  = cell(N_user,1);
@@ -84,8 +84,8 @@ count  = 1;
 % check = cell(1, N_user);
 tic
 for i_ebNo = 1:length(EbNo)
-    numBits    = zeros(Nr, N_user);
-    bitError   = zeros(Nr, N_user);
+    numBits    = zeros(1, N_user);
+    bitError   = zeros(1, N_user);
     
     for i_ch = 1:n_ch
         %% Transmitter
@@ -128,30 +128,19 @@ for i_ebNo = 1:length(EbNo)
         rx_bits  = cell(N_user,1);
         
         for i_user = 1:N_user
-            
-%             for n = 1:Scfdma.N
-% %                 H_users = 0;
-% %                 for j_user = 1:N_user
-% %                     H_users = H_users + H_ch{i_user,j_user}(:,:,n)'*H_ch{i_user,j_user}(:,:,n);
-% %                 end
-%                 g(:,:,n) = (H_ch{i_user}(:,:,n)'*H_ch{i_user}(:,:,n) + VarN(i_user, i_ebNo)*eye(Nr))^-1 * H_ch{i_user}(:,:,n)';
-%                 check(:,:,n) = g(:,:,n)*H_ch{i_user}(:,:,n);
-%             end
-            
             rx{i_user}       = scfdma_rx(rx_sc{i_user}, Scfdma, G{i_user});
+            rx_bits{i_user}  = myDemapping(rx{i_user}, bits_per_symb(i_user));
             
-            for nr = 1:Nr
-                rx_bits{i_user}(nr,:)   = myDemapping(rx{i_user}(nr,:), bits_per_symb(i_user));
-                bitError(nr, i_user)    = bitError(nr, i_user) + sum(xor(tx_bits{i_user}(nr,:), rx_bits{i_user}(nr,:)));
-                numBits(nr, i_user)     = numBits(nr, i_user) + length(rx_bits{i_user}(nr,:));
-            end
+            bitError(1, i_user)    = bitError(1, i_user) + sum(xor(tx_bits{i_user}, rx_bits{i_user}));
+            numBits(1, i_user)     = numBits(1, i_user) + length(rx_bits{i_user});
         end
     end
-    if Nr == 1
-        BER(:, i_ebNo) = bitError./numBits;
-    else
-        BER(:, i_ebNo) = sum(bitError)./sum(numBits);
-    end
+    BER(:, i_ebNo) = bitError./numBits;
+%     if Nr == 1
+%         BER(:, i_ebNo) = bitError./numBits;
+%     else
+%         BER(:, i_ebNo) = sum(bitError)./sum(numBits);
+%     end
 end
 toc
 %% Plotting BER

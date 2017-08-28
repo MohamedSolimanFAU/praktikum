@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 0:3:30; % in dB
+EbNo      = 50; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,7 +23,7 @@ bits_per_symb  = [2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 100;
+n_ch        = 1;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -110,9 +110,7 @@ for i_ebNo = 1:length(EbNo)
                 end
             end
         end
-        
-%         error = (check(i_user, i_user, :) - 1)^2 + sum(check(i_user, i_user, :)^2) + norm(G{i_user}(:,:,i))^2*VarN(1);
-        
+               
         for i_user = 1:N_user
             tx_sc{i_user} = scfdma_tx(tx{i_user}, Scfdma, V{i_user});
         end

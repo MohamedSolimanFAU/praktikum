@@ -24,6 +24,9 @@ sum_lambda = cell(N_user, 1);
 lambda_new = cell(N_user, 1);
 lambda_old = cell(N_user, 1);
 
+sum_MSE    = cell(N_user, 1);
+epslon     = cell(N_user, 1);
+
 count = 10;
 iterations = 1000;
 %% Initializing v_MMSE_k & g_MMSE_k
@@ -36,7 +39,10 @@ for k_user = 1:N_user
     G_all{k_user}      = zeros(Nt, 1, N);
     sum_G{k_user}      = zeros(Nr, Nt, N);
     sum_V{k_user}      = zeros(Nr, Nt, N);
+    V_tempnorm{k_user} = zeros(Nr, Nt, N);
 end
+
+Convergence_check(iterations, N) = 0;
 
 for idx = 1:N
     for k_user = 1:N_user
@@ -49,17 +55,27 @@ end
 
 eta_sum = zeros(1, iterations); % sum mean square error
 
-for j = 1:1000
+for j = 1:iterations
+    for k_user = 1:N_user
+        lambda_new{k_user}      = zeros(1,N);
+        lambda_old{k_user}      = zeros(1,N);
+        sumV_temp{k_user}       = zeros(Nr, Nt, N);
+        V_temp{k_user}          = zeros(Nt, 1, N);
+        sum_lambda{k_user}      = zeros(Nr, Nt, N);
+    end
+    
+    for k_user = 1:N_user
+        sum_MSE{k_user} = zeros(1, 1, N);
+        epslon{k_user}  = zeros(j, N);
+    end
+    
     for idx = 1:N
+        
+        
         for k_user = 1:N_user
-            lambda_new{k_user}      = zeros(1,N);
-            lambda_old{k_user}      = zeros(1,N);
-            sumV_temp{k_user}       = zeros(Nr, Nt, N);
-            V_temp{k_user}          = zeros(Nt, 1, N);
-            sum_lambda{k_user}      = zeros(Nr, Nt, N);
+            
             V_old{k_user}(:,:,idx)  = V_new{k_user}(:,:,idx);
-        end
-        for k_user = 1:N_user
+            
             for j_user = 1:N_user
                 sumV_temp{k_user}(:,:,idx)  = sumV_temp{k_user}(:,:,idx) + H_ch{j_user, k_user}(:,:,idx)'*G_all{j_user}(:,:,idx)*G_all{j_user}(:,:,idx)'*H_ch{j_user, k_user}(:,:,idx);
             end
@@ -68,14 +84,12 @@ for j = 1:1000
         end
         
         for k_user = 1:N_user
+            num = 0;
+            den = 0;
+            lambda_old{k_user}(1,idx) =  0;
             if V_tempnorm{k_user}(:,:,idx) <= 1
                 V_new{k_user}(:,:,idx) = V_temp{k_user}(:,:,idx);
             elseif V_tempnorm{k_user}(:,:,idx) > 1
-                
-                lambda_old{k_user}(1,idx) =  0;
-                num = 0;
-                den = 0;
-                
                 for j_user = 1:N_user
                     sum_lambda{k_user}(:,:,idx)  = sum_lambda{k_user}(:,:,idx) + H_ch{j_user, k_user}(:,:,idx)'*G_all{j_user}(:,:,idx)*G_all{j_user}(:,:,idx)'*H_ch{j_user, k_user}(:,:,idx);
                 end
@@ -110,26 +124,23 @@ for j = 1:1000
             G{k_user}(:,:,idx) = pinv(sum_G{k_user}(:,:,idx) + VarN(k_user)*eye(Nr)) * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx);
             G_all{k_user}(:,:,idx) = G{k_user}(:,:,idx);
         end
+
         
-        
-        
-        sum_MSE = zeros(1, 1, N_user);
-        epslon  = zeros(j, N_user);
         for k_user = 1:N_user
             for j_user = 1:N_user
                 if k_user ~= j_user
-                    sum_MSE(:,:,k_user) = sum_MSE(:,:,k_user) + abs(G{k_user}(:,:,idx)' * H_ch{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx))^2;
+                    sum_MSE{k_user}(:,:,idx) = sum_MSE{k_user}(:,:,idx) + abs(G{k_user}(:,:,idx)' * H_ch{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx))^2;
                 end
             end
-            epslon(j, k_user) = abs((G{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE(:,:,k_user) + norm(G{k_user}(:,:,idx), 2)^2 * VarN(k_user);
-            eta_sum(j) = eta_sum(j)+ epslon(j,k_user); % Sum mean square error
+            epslon{k_user}(j, idx) = abs((G{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE{k_user}(:,:,idx) + norm(G{k_user}(:,:,idx), 2)^2 * VarN(k_user);
+            eta_sum(j) = eta_sum(j)+ epslon{k_user}(j, idx); % Sum mean square error
         end
         
-        Convergence_check(iterations) = 0;
+        
         for k_user = 1:N_user
-            Convergence_check(j) = Convergence_check(j) + norm(V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx),2);
+            Convergence_check(j, idx) = Convergence_check(j, idx) + norm(V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx),2);
         end
-        if Convergence_check(j) <= 10^-4
+        if Convergence_check(j, idx) <= 10^-4
             break;
         end
     end

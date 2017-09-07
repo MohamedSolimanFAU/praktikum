@@ -19,17 +19,6 @@ rx      = zeros(1, N_scSymb*M);
 
 rx_cp   = rx_sc;
 
-% G' in switch case will be calculated
-% NG      = size(G, 1);
-% switch NG
-%     case 1
-%         G = squeeze(G)';
-%     case 2
-%         G = squeeze(permute(conj(G),[2 1 3]));
-%     otherwise
-%         G = squeeze(permute(conj(G),[2 1 3]));
-% end
-
 for i_bl = 0:N_scSymb-1
     rx_x(:, i_bl*N+(1:N))   = rx_cp(:, i_bl*N_x + (l_cp + 1:N_x));
 

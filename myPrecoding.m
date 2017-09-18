@@ -126,19 +126,19 @@ for j = 1:iterations
         end
 
         
-        for k_user = 1:N_user
-            for j_user = 1:N_user
-                if k_user ~= j_user
-                    sum_MSE{k_user}(:,:,idx) = sum_MSE{k_user}(:,:,idx) + abs(G{k_user}(:,:,idx)' * H_ch{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx))^2;
-                end
-            end
-            epslon{k_user}(j, idx) = abs((G{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE{k_user}(:,:,idx) + norm(G{k_user}(:,:,idx), 2)^2 * VarN(k_user);
-            eta_sum(j) = eta_sum(j)+ epslon{k_user}(j, idx); % Sum mean square error
-        end
+%         for k_user = 1:N_user
+%             for j_user = 1:N_user
+%                 if k_user ~= j_user
+%                     sum_MSE{k_user}(:,:,idx) = sum_MSE{k_user}(:,:,idx) + abs(G{k_user}(:,:,idx)' * H_ch{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx))^2;
+%                 end
+%             end
+%             epslon{k_user}(j, idx) = abs((G{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE{k_user}(:,:,idx) + norm(G{k_user}(:,:,idx), 2)^2 * VarN(k_user);
+%             eta_sum(j) = eta_sum(j)+ epslon{k_user}(j, idx); % Sum mean square error
+%         end
         
         
         for k_user = 1:N_user
-            Convergence_check(j, idx) = Convergence_check(j, idx) + norm(V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx),2);
+            Convergence_check(j, idx) = Convergence_check(j, idx) + norm(V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx), 2);
         end
         if Convergence_check(j, idx) <= 10^-4
             break;

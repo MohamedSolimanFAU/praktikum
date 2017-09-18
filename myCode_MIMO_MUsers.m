@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 30; % in dB
+EbNo      = 0:6:36; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters

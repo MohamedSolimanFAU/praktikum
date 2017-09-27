@@ -108,7 +108,7 @@ for i_ebNo = 1:length(EbNo)
 
         for i_user = 1:N_user
             tx_temp = tx{i_user};
-            [V, G] = myPrecoding(h_cell, N_user, idx_ch, i_ch, VarN);
+%             [V, G] = myPrecoding(h_cell, N_user, idx_ch, i_ch, VarN);
             for i_bl = 0:Scfdma.N_scSymb-1
                 % Frequency domain: sc assignment and precoding
                 Tx(i_bl*M+(1:M)) = fft(tx_temp(i_bl*M+(1:M)),M)./sqrt(M);        % V{i_user} * 

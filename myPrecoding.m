@@ -26,16 +26,17 @@ lambda_old = cell(N_user, 1);
 
 sum_MSE    = cell(N_user, 1);
 epslon     = cell(N_user, 1);
+eta_sum    = cell(N_user, 1);
 
 count = 10;
-iterations = 1000;
+iterations = 1;
 
 tr_vk_vkh = cell(N_user, 1);
 
 %% Initializing v_MMSE_k & g_MMSE_k
 
 for k_user = 1:N_user
-    v_init{k_user}     = randn(Nt, 1)+ 1i* randn(Nt, 1);
+    v_init{k_user}     = ones(Nt,1) * sqrt(1/Nt); % randn(Nt, 1)+ 1i* randn(Nt, 1);
     V_init{k_user}     = fft(v_init{k_user}, N, 3);
     V_new{k_user}      = zeros(Nt, 1, N);
     G{k_user}          = zeros(Nt, 1, N);
@@ -44,6 +45,8 @@ for k_user = 1:N_user
     sum_V{k_user}      = zeros(Nr, Nt, N);
     V_tempnorm{k_user} = zeros(Nr, Nt, N);
     tr_vk_vkh{k_user}  = zeros(N, count, iterations);
+    eta_sum{k_user}    = zeros(1, iterations); % sum mean square error
+
 end
 
 Convergence_check(iterations, N) = 0;
@@ -57,7 +60,6 @@ for idx = 1:N
     end
 end
 
-eta_sum = zeros(1, iterations); % sum mean square error
 
 for j = 1:iterations
     for k_user = 1:N_user
@@ -74,8 +76,6 @@ for j = 1:iterations
     end
     
     for idx = 1:N
-        
-        
         for k_user = 1:N_user
             
             V_old{k_user}(:,:,idx)  = V_new{k_user}(:,:,idx);
@@ -139,7 +139,7 @@ for j = 1:iterations
                 end
             end
             epslon{k_user}(j, idx) = abs((G{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE{k_user}(:,:,idx) + norm(G{k_user}(:,:,idx), 2)^2 * VarN(k_user);
-            eta_sum(j) = eta_sum(j)+ epslon{k_user}(j, idx); % Sum mean square error
+            eta_sum{k_user}(j) = eta_sum{k_user}(j)+ epslon{k_user}(j, idx); % Sum mean square error
         end
         
         

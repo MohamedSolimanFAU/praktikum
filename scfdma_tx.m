@@ -18,14 +18,12 @@ Tx_x    = zeros(Nt, N*N_scSymb);
 tx_x    = zeros(Nt, N*N_scSymb);
 tx_cp   = zeros(Nt, N*N_scSymb);
 
-% V       = squeeze(V(:, nu_0+(1:M)));
-
 
 for i_bl = 0:N_scSymb-1
     Tx(:, i_bl*M+(1:M))          = fft(tx(:, i_bl*M+(1:M)),M, 2)./sqrt(M);
     
     for idx = 1:M
-        Tx_x(:, i_bl*N+nu_0+idx)   = V(:,:,idx) * Tx(:, i_bl*M+idx);
+        Tx_x(:, i_bl*N+nu_0+idx)   = V(:,:,idx+nu_0) * Tx(:, i_bl*M+idx);
     end
     
     tx_x(:, i_bl*N+(1:N))        = ifft(Tx_x(:, i_bl*N+(1:N)), N, 2).*sqrt(N);

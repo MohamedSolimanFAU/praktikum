@@ -23,7 +23,7 @@ bits_per_symb  = [2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 10;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -80,7 +80,8 @@ for i_user = 1:N_user
 end
 
 tx_sc  = cell(N_user,1);
-count  = 1;
+check  = zeros(N_user, N_user, Scfdma.N);
+count  = 80;
 % check = cell(1, N_user);
 tic
 for i_ebNo = 1:length(EbNo)
@@ -126,8 +127,10 @@ for i_ebNo = 1:length(EbNo)
         rx_bits  = cell(N_user,1);
         
         for i_user = 1:N_user
+           
             rx{i_user}       = scfdma_rx(rx_sc{i_user}, Scfdma, G{i_user});
-            rx_bits{i_user}  = myDemapping(rx{i_user}, bits_per_symb(i_user));
+%             rx_bits{i_user}  = myDemapping(rx{i_user}, bits_per_symb(i_user));
+            [rx_bits{i_user}, temp]  = bitDemap(rx{i_user}, bits_per_symb(i_user), VarN(i_user, i_ebNo));
             
             bitError(1, i_user)    = bitError(1, i_user) + sum(xor(tx_bits{i_user}, rx_bits{i_user}));
             numBits(1, i_user)     = numBits(1, i_user) + length(rx_bits{i_user});
@@ -142,6 +145,11 @@ for i_ebNo = 1:length(EbNo)
 end
 toc
 %% Plotting BER
+figure;
+plot(rx{1}); hold on; plot(tx{1});
+
+figure;
+plot(rx{2}); hold on; plot(tx{2});
 % figure;
 % plot(tx_bits{1}(1,:),'ro');
 % hold on

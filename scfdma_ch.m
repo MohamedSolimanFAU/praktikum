@@ -2,7 +2,7 @@ function [ rx_sc ] = scfdma_ch( tx_sc, h_ch, VarN, noise_type)
 %SCFDMA_CH Summary of this function goes here
 %   Detailed explanation goes here
 
-N_user = size(h_ch, 1);
+N_user = size(h_ch, 2);
 Nr     = size(h_ch{1}, 1);
 qh     = size(h_ch{1}, 3);
 

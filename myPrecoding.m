@@ -1,4 +1,4 @@
-function [ V_new, G ] = myPrecoding( H_ch, VarN, N )
+function [ V_new, G_all ] = myPrecoding( H_ch, VarN, N )
 %MYPRECODING_2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -7,7 +7,6 @@ N_user  = size(H_ch, 1);
 Nr      = size(H_ch{1},1);
 Nt      = size(H_ch{1},2);
 
-G       = cell(N_user, 1);
 G_all	= cell(N_user, 1);
 V_new   = cell(N_user, 1);
 V_old   = cell(N_user, 1);
@@ -39,7 +38,6 @@ for k_user = 1:N_user
     v_init{k_user}     = ones(Nt,1) * sqrt(1/Nt); % randn(Nt, 1)+ 1i* randn(Nt, 1);
     V_init{k_user}     = fft(v_init{k_user}, N, 3);
     V_new{k_user}      = zeros(Nt, 1, N);
-    G{k_user}          = zeros(Nt, 1, N);
     G_all{k_user}      = zeros(Nt, 1, N);
     sum_G{k_user}      = zeros(Nr, Nt, N);
     sum_V{k_user}      = zeros(Nr, Nt, N);
@@ -127,18 +125,17 @@ for j = 1:iterations
             for j_user = 1:N_user
                 sum_G{k_user}(:,:,idx)  = sum_G{k_user}(:,:,idx) + H_ch{k_user, j_user}(:,:,idx)*V_new{j_user}(:,:,idx)*V_new{j_user}(:,:,idx)'*H_ch{k_user, j_user}(:,:,idx)';
             end
-            G{k_user}(:,:,idx) = pinv(sum_G{k_user}(:,:,idx) + VarN(k_user)*eye(Nr)) * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx);
-            G_all{k_user}(:,:,idx) = G{k_user}(:,:,idx);
+            G_all{k_user}(:,:,idx) = pinv(sum_G{k_user}(:,:,idx) + VarN(k_user)*eye(Nr)) * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx);
         end
 
         
         for k_user = 1:N_user
             for j_user = 1:N_user
                 if k_user ~= j_user
-                    sum_MSE{k_user}(:,:,idx) = sum_MSE{k_user}(:,:,idx) + abs(G{k_user}(:,:,idx)' * H_ch{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx))^2;
+                    sum_MSE{k_user}(:,:,idx) = sum_MSE{k_user}(:,:,idx) + abs(G_all{k_user}(:,:,idx)' * H_ch{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx))^2;
                 end
             end
-            epslon{k_user}(j, idx) = abs((G{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE{k_user}(:,:,idx) + norm(G{k_user}(:,:,idx), 2)^2 * VarN(k_user);
+            epslon{k_user}(j, idx) = abs((G_all{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE{k_user}(:,:,idx) + norm(G_all{k_user}(:,:,idx), 2)^2 * VarN(k_user);
             eta_sum{k_user}(j) = eta_sum{k_user}(j)+ epslon{k_user}(j, idx); % Sum mean square error
         end
         

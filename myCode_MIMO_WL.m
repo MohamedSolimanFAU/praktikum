@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 30; % in dB
+EbNo      = 0:30; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,7 +23,7 @@ bits_per_symb  = [2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 100;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -157,15 +157,15 @@ end
 toc
 %% Plotting BER
 
-figure;
-plot(tx_bits{1},'ro');
-hold on
-plot(rx_bits{1},'b*');
-
-figure;
-plot(tx_bits{2},'ro');
-hold on
-plot(rx_bits{2},'b*');
+% figure;
+% plot(tx_bits{1},'ro');
+% hold on
+% plot(rx_bits{1},'b*');
+% 
+% figure;
+% plot(tx_bits{2},'ro');
+% hold on
+% plot(rx_bits{2},'b*');
 
 
 

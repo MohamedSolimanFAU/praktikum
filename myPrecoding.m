@@ -28,14 +28,14 @@ epslon     = cell(N_user, 1);
 eta_sum    = cell(N_user, 1);
 
 count = 10;
-iterations = 1;
+iterations = 3000;
 
 tr_vk_vkh = cell(N_user, 1);
 
 %% Initializing v_MMSE_k & g_MMSE_k
 
 for k_user = 1:N_user
-    v_init{k_user}     = ones(Nt,1) * sqrt(1/Nt); % randn(Nt, 1)+ 1i* randn(Nt, 1);
+    v_init{k_user}     = randn(Nt, 1)+ 1i* randn(Nt, 1);
     V_init{k_user}     = fft(v_init{k_user}, N, 3);
     V_new{k_user}      = zeros(Nt, 1, N);
     G_all{k_user}      = zeros(Nt, 1, N);

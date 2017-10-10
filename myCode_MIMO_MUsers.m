@@ -15,22 +15,22 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 0:30; % in dB
+EbNo      = 20; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
-bits_per_symb  = [2 2];
+bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1000;
+n_ch        = 1;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;
 Nt          = 2;
 
 start       = 1;
-offset      = [0 200 434] + start - 1; % starting point for
+offset      = [0 200 434 675] + start - 1; % starting point for
 
 % f = generate_channel(type, Nr, Nt, N_snapshot);
 load([ 'LTE_channel_' type '_Anz' num2str(N_snapshot) '_cell_NR' num2str(Nr) '_NT' num2str(Nt) '.mat' ]);
@@ -73,15 +73,11 @@ for i_user = 1:N_user
     tx_bits{i_user} = randi([0 1], 1, num_bits(i_user));
     % Bit mapping
     [tx{i_user}, SymbTab{i_user}] = bitMap(tx_bits{i_user}, bits_per_symb(i_user));
-%     for nt = 1:Nt
-%         tx_bits{i_user}(nt,:)  = tx_bits{i_user};
-%         tx{i_user}(nt,:)       = tx{i_user};
-%     end
 end
 
 tx_sc  = cell(N_user,1);
 check  = zeros(N_user, N_user, Scfdma.N);
-count  = 80;
+count  = 1;
 % check = cell(1, N_user);
 tic
 for i_ebNo = 1:length(EbNo)
@@ -127,7 +123,6 @@ for i_ebNo = 1:length(EbNo)
         rx_bits  = cell(N_user,1);
         
         for i_user = 1:N_user
-           
             rx{i_user}       = scfdma_rx(rx_sc{i_user}, Scfdma, G{i_user});
 %             rx_bits{i_user}  = myDemapping(rx{i_user}, bits_per_symb(i_user));
             [rx_bits{i_user}, temp]  = bitDemap(rx{i_user}, bits_per_symb(i_user), VarN(i_user, i_ebNo));
@@ -137,38 +132,16 @@ for i_ebNo = 1:length(EbNo)
         end
     end
     BER(:, i_ebNo) = bitError./numBits;
-%     if Nr == 1
-%         BER(:, i_ebNo) = bitError./numBits;
-%     else
-%         BER(:, i_ebNo) = sum(bitError)./sum(numBits);
-%     end
 end
 toc
+
 %% Plotting BER
 figure;
 plot(rx{1}); hold on; plot(tx{1});
 
 figure;
 plot(rx{2}); hold on; plot(tx{2});
-% figure;
-% plot(tx_bits{1}(1,:),'ro');
-% hold on
-% plot(rx_bits{1}(1,:),'b*');
-% 
-% figure;
-% plot(tx_bits{1}(2,:),'ro');
-% hold on
-% plot(rx_bits{1}(2,:),'b*');
-% 
-% figure;
-% plot(tx_bits{2}(1,:),'ro');
-% hold on
-% plot(rx_bits{2}(1,:),'b*');
-% 
-% figure;
-% plot(tx_bits{2}(2,:),'ro');
-% hold on
-% plot(rx_bits{2}(2,:),'b*');
+
 
 figure;
 for i = 1:N_user

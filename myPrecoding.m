@@ -26,11 +26,10 @@ lambda_old = cell(N_user, 1);
 sum_MSE    = cell(N_user, 1);
 epslon     = cell(N_user, 1);
 eta_sum    = cell(N_user, 1);
+tr_vk_vkh = cell(N_user, 1);
 
 count = 10;
 iterations = 3000;
-
-tr_vk_vkh = cell(N_user, 1);
 
 %% Initializing v_MMSE_k & g_MMSE_k
 
@@ -41,10 +40,10 @@ for k_user = 1:N_user
     G_all{k_user}      = zeros(Nt, 1, N);
     sum_G{k_user}      = zeros(Nr, Nt, N);
     sum_V{k_user}      = zeros(Nr, Nt, N);
-    V_tempnorm{k_user} = zeros(Nr, Nt, N);
-    tr_vk_vkh{k_user}  = zeros(N, count, iterations);
+    V_tempnorm{k_user} = zeros(1, N);
+    V_norm{k_user}     = zeros(1, N);
+    tr_vk_vkh{k_user}  = zeros(count, N);
     eta_sum{k_user}    = zeros(1, iterations); % sum mean square error
-
 end
 
 Convergence_check(iterations, N) = 0;
@@ -66,11 +65,11 @@ for j = 1:iterations
         sumV_temp{k_user}       = zeros(Nr, Nt, N);
         V_temp{k_user}          = zeros(Nt, 1, N);
         sum_lambda{k_user}      = zeros(Nr, Nt, N);
-    end
-    
-    for k_user = 1:N_user
+        
         sum_MSE{k_user} = zeros(1, 1, N);
         epslon{k_user}  = zeros(j, N);
+        
+%         V_old{k_user}(:,:,:)  = V_new{k_user}(:,:,:);
     end
     
     for idx = 1:N
@@ -79,23 +78,24 @@ for j = 1:iterations
             V_old{k_user}(:,:,idx)  = V_new{k_user}(:,:,idx);
             
             for j_user = 1:N_user
-                sumV_temp{k_user}(:,:,idx)  = sumV_temp{k_user}(:,:,idx) + H_ch{j_user, k_user}(:,:,idx)'*G_all{j_user}(:,:,idx)*G_all{j_user}(:,:,idx)'*H_ch{j_user, k_user}(:,:,idx);
+                sumV_temp{k_user}(:,:,idx)  = sumV_temp{k_user}(:,:,idx) + (H_ch{j_user, k_user}(:,:,idx)'*G_all{j_user}(:,:,idx)*G_all{j_user}(:,:,idx)'*H_ch{j_user, k_user}(:,:,idx));
             end
-            V_temp{k_user}(:,:,idx) = pinv(sumV_temp{k_user}(:,:,idx)) * H_ch{k_user, k_user}(:,:,idx)' * G_all{k_user}(:,:,idx);
-            V_tempnorm{k_user}(:,:,idx) = norm(V_temp{k_user}(:,:,idx), 2)^2;
+            V_temp{k_user}(:,:,idx)    = pinv(sumV_temp{k_user}(:,:,idx)) * H_ch{k_user, k_user}(:,:,idx)' * G_all{k_user}(:,:,idx);
+            V_tempnorm{k_user}(1,idx)  = norm(V_temp{k_user}(:,:,idx), 2)^2;
         end
         
         for k_user = 1:N_user
-            num = 0;
-            den = 0;
-            lambda_old{k_user}(1,idx) =  0;
-            if V_tempnorm{k_user}(:,:,idx) <= 1
+            
+            if V_tempnorm{k_user}(1,idx) <= 1
                 V_new{k_user}(:,:,idx) = V_temp{k_user}(:,:,idx);
-            elseif V_tempnorm{k_user}(:,:,idx) > 1
+            elseif V_tempnorm{k_user}(1,idx) > 1
                 for j_user = 1:N_user
                     sum_lambda{k_user}(:,:,idx)  = sum_lambda{k_user}(:,:,idx) + H_ch{j_user, k_user}(:,:,idx)'*G_all{j_user}(:,:,idx)*G_all{j_user}(:,:,idx)'*H_ch{j_user, k_user}(:,:,idx);
                 end
                 
+                num = 0;
+                den = 0;
+                lambda_old{k_user}(1,idx) =  0;
                 
                 for i = 1:count
                     inverse_mat   = pinv(sum_lambda{k_user}(:,:,idx) + lambda_new{k_user}(1,idx)*eye(Nt));
@@ -109,11 +109,11 @@ for j = 1:iterations
                     lambda_old{k_user}(1,idx)   = lambda_new{k_user}(1,idx);
                     
                     V_new{k_user}(:,:,idx)  = pinv(sum_lambda{k_user}(:,:,idx) + lambda_new{k_user}(1,idx)*eye(Nt)) * H_ch{k_user, k_user}(:,:,idx)' * G_all{k_user}(:,:,idx);
-                    V_norm{k_user}(:,:,idx) = norm(V_new{k_user}(:,:,idx), 2)^2;
+                    V_norm{k_user}(1, idx)  = norm(V_new{k_user}(:,:,idx), 2)^2;
                     
-                    tr_vk_vkh{k_user}(idx, i, j) = trace(V_new{k_user}(:,:,idx)*V_new{k_user}(:,:,idx)');
+                    tr_vk_vkh{k_user}(i, idx) = trace(V_new{k_user}(:,:,idx)*V_new{k_user}(:,:,idx)');
                     
-                    if V_norm{k_user}(:,:,idx) == 1
+                    if V_norm{k_user}(1, idx) == 1
                         break;
                     end
                 end

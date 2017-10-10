@@ -1,4 +1,6 @@
-uuser =2;
+uuser =1;
+
+figure;
 subplot(2,1,1)
 stem(real(rx{uuser}),'rx')
 hold on

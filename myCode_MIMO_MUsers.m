@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 20; % in dB
+EbNo      = 0:3:21; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,7 +23,7 @@ bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 100;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -79,6 +79,7 @@ tx_sc  = cell(N_user,1);
 check  = zeros(N_user, N_user, Scfdma.N);
 count  = 1;
 % check = cell(1, N_user);
+
 tic
 for i_ebNo = 1:length(EbNo)
     numBits    = zeros(1, N_user);
@@ -99,7 +100,6 @@ for i_ebNo = 1:length(EbNo)
         end
         
         [V, G] = myPrecoding(H_ch, VarN(:, i_ebNo), Scfdma.N);
-        
         for i = 1:Scfdma.N
             for i_user = 1:N_user
                 for j_user = 1:N_user 
@@ -124,8 +124,8 @@ for i_ebNo = 1:length(EbNo)
         
         for i_user = 1:N_user
             rx{i_user}       = scfdma_rx(rx_sc{i_user}, Scfdma, G{i_user});
-%             rx_bits{i_user}  = myDemapping(rx{i_user}, bits_per_symb(i_user));
-            [rx_bits{i_user}, temp]  = bitDemap(rx{i_user}, bits_per_symb(i_user), VarN(i_user, i_ebNo));
+            rx_bits{i_user}  = myDemapping(rx{i_user}, bits_per_symb(i_user));
+%             [rx_bits{i_user}, temp]  = bitDemap(rx{i_user}, bits_per_symb(i_user), VarN(i_user, i_ebNo));
             
             bitError(1, i_user)    = bitError(1, i_user) + sum(xor(tx_bits{i_user}, rx_bits{i_user}));
             numBits(1, i_user)     = numBits(1, i_user) + length(rx_bits{i_user});

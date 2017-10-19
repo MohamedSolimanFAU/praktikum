@@ -26,7 +26,7 @@ lambda_old = cell(N_user, 1);
 sum_MSE    = cell(N_user, 1);
 epslon     = cell(N_user, 1);
 eta_sum    = cell(N_user, 1);
-tr_vk_vkh = cell(N_user, 1);
+tr_vk_vkh  = cell(N_user, 1);
 
 count = 10;
 iterations = 3000;

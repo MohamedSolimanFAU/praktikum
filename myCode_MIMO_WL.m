@@ -15,15 +15,15 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 0:3:30; % in dB
+EbNo      = 0:3:21; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
-bits_per_symb  = [2 2];
+bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 10;
+n_ch        = 100;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;

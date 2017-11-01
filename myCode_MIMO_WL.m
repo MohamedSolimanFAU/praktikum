@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 0:3:21; % in dB
+EbNo      = 0; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,14 +23,14 @@ bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 100;
+n_ch        = 1000;
 type        = 'A';
 N_snapshot  = 20000;
 Nr          = 2;
 Nt          = 2;
 
 start       = 1;
-offset      = [0 200 434] + start - 1; % starting point for
+offset      = [0 200 434 656] + start - 1; % starting point for
 
 % f = generate_channel(type, Nr, Nt, N_snapshot);
 load([ 'LTE_channel_' type '_Anz' num2str(N_snapshot) '_cell_NR' num2str(Nr) '_NT' num2str(Nt) '.mat' ]);
@@ -59,6 +59,11 @@ num_bits  = zeros(1,N_user); % N bits to be generated
 VarN      = zeros(N_user, length(EbNo_lin));
 
 BER       = zeros(N_user, length(EbNo));
+
+numSubframes    = zeros(N_user, length(EbNo));
+subframeError   = zeros(N_user, length(EbNo));
+new_bitError    = zeros(N_user,1);
+BLER            = zeros(N_user, length(EbNo));
 
 for i_user = 1:N_user
     % channel index vector
@@ -98,6 +103,8 @@ tic
 for i_ebNo = 1:length(EbNo)
     numBits    = zeros(1, N_user);
     bitError   = zeros(1, N_user);
+    
+    numSubframes(:, i_ebNo) = numSubframes(:, i_ebNo) + ones(i_user,1);
     
     for i_ch = 1:n_ch
         %% Transmitter
@@ -150,9 +157,15 @@ for i_ebNo = 1:length(EbNo)
             
             bitError(1, i_user)    = bitError(1, i_user) + sum(xor(tx_bits{i_user}, rx_bits{i_user}));
             numBits(1, i_user)     = numBits(1, i_user) + length(rx_bits{i_user});
+            
+            new_bitError(i_user,1) = sum(tx_bits{i_user} ~= rx_bits{i_user});
         end
+        subframeError_new        = new_bitError > 0;
+        subframeError(:, i_ebNo) = subframeError(:, i_ebNo) + subframeError_new;
+
     end
-    BER(:, i_ebNo) = bitError./numBits;
+    BER(:, i_ebNo)  = bitError./numBits;
+    BLER(:,i_ebNo)  = subframeError(:,i_ebNo)./numSubframes(:,i_ebNo);
 end
 toc
 %% Plotting BER

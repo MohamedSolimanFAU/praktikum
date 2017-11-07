@@ -25,14 +25,13 @@ lambda_old = cell(N_user, 1);
 
 sum_MSE    = cell(N_user, 1);
 epslon     = cell(N_user, 1);
-eta_sum    = cell(N_user, 1);
 tr_vk_vkh  = cell(N_user, 1);
 
 count = 10;
 iterations = 3000;
 
 %% Initializing v_MMSE_k & g_MMSE_k
-
+% ones(Nt, 1) * (1/sqrt(Nt))
 for k_user = 1:N_user
     v_init{k_user}     = randn(Nt, 1)+ 1i* randn(Nt, 1);
     V_init{k_user}     = fft(v_init{k_user}, N, 3);
@@ -43,10 +42,7 @@ for k_user = 1:N_user
     V_tempnorm{k_user} = zeros(1, N);
     V_norm{k_user}     = zeros(1, N);
     tr_vk_vkh{k_user}  = zeros(count, N);
-    eta_sum{k_user}    = zeros(1, iterations); % sum mean square error
 end
-
-Convergence_check(iterations, N) = 0;
 
 for idx = 1:N
     for k_user = 1:N_user
@@ -57,8 +53,12 @@ for idx = 1:N
     end
 end
 
+Convergence_check(iterations, N) = 0;
+eta_sum = zeros(iterations, N);     % sum mean square error
 
-for j = 1:iterations
+%% Update v_MMSE_k & g_MMSE_k
+
+for j = 1:iterations    
     for k_user = 1:N_user
         lambda_new{k_user}      = zeros(1,N);
         lambda_old{k_user}      = zeros(1,N);
@@ -93,12 +93,12 @@ for j = 1:iterations
                     sum_lambda{k_user}(:,:,idx)  = sum_lambda{k_user}(:,:,idx) + H_ch{j_user, k_user}(:,:,idx)'*G_all{j_user}(:,:,idx)*G_all{j_user}(:,:,idx)'*H_ch{j_user, k_user}(:,:,idx);
                 end
                 
-                num = 0;
-                den = 0;
+%                 num = 0;
+%                 den = 0;
                 lambda_old{k_user}(1,idx) =  0;
                 
                 for i = 1:count
-                    inverse_mat   = pinv(sum_lambda{k_user}(:,:,idx) + lambda_new{k_user}(1,idx)*eye(Nt));
+                    inverse_mat   = pinv(sum_lambda{k_user}(:,:,idx) + lambda_old{k_user}(1,idx)*eye(Nt));
                     inner_sum_num = inverse_mat * inverse_mat;
                     inner_sum_den = inverse_mat * inverse_mat * inverse_mat;
                     
@@ -135,8 +135,8 @@ for j = 1:iterations
                     sum_MSE{k_user}(:,:,idx) = sum_MSE{k_user}(:,:,idx) + abs(G_all{k_user}(:,:,idx)' * H_ch{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx))^2;
                 end
             end
-            epslon{k_user}(j, idx) = abs((G_all{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE{k_user}(:,:,idx) + norm(G_all{k_user}(:,:,idx), 2)^2 * VarN(k_user);
-            eta_sum{k_user}(j) = eta_sum{k_user}(j)+ epslon{k_user}(j, idx); % Sum mean square error
+            epslon{k_user}(j, idx) = abs((G_all{k_user}(:,:,idx)' * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - 1)^2 + sum_MSE{k_user}(:,:,idx) + (norm(G_all{k_user}(:,:,idx), 2)^2 * VarN(k_user));
+            eta_sum(j, idx) = eta_sum(j, idx) + epslon{k_user}(j, idx); % Sum mean square error
         end
         
         

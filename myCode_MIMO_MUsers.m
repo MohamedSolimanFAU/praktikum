@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 12; % in dB
+EbNo      = 0:5:25; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,14 +23,14 @@ bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1000;
-type        = 'A';
+n_ch        = 10;
+type        = 'ITU-PA';
 N_snapshot  = 20000;
 Nr          = 2;
 Nt          = 2;
 
 start       = 1;
-offset      = [0 200 434 675] + start - 1; % starting point for
+offset      = [0 200 434 675 777] + start - 1; % starting point for
 
 % f = generate_channel(type, Nr, Nt, N_snapshot);
 load([ 'LTE_channel_' type '_Anz' num2str(N_snapshot) '_cell_NR' num2str(Nr) '_NT' num2str(Nt) '.mat' ]);
@@ -154,6 +154,9 @@ toc
 % figure;
 % plot(rx{2}); hold on; plot(tx{2});
 
+%strcat('results'_)
+%num2str()
+%save(mat_file_name,'BER','BLER');
 
 figure;
 for i = 1:N_user

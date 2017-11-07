@@ -28,12 +28,13 @@ lambda_old  = cell(N_user, 1);
 
 sum_MSE    = cell(N_user, 1);
 epslon     = cell(N_user, 1);
-eta_sum    = cell(N_user, 1);
+% eta_sum    = cell(N_user, 1);
 
 count = 10;
-iterations = 100;
+iterations = 5000;
 
 Convergence_check(iterations, N) = 0;
+eta_sum = zeros(iterations, N);
 
 Dr    = WL.Dr;
 Br    = WL.Br;
@@ -55,7 +56,7 @@ end
 
 for k_user = 1:N_user
     Rs{k_user}       = fft(WL.Rs(:,:,k_user), N, 3);
-    eta_sum{k_user}  = zeros(1, iterations); % sum mean square error
+%     eta_sum{k_user}  = zeros(1, iterations); % sum mean square error
 end
 
 %% Initializing beamforming vector
@@ -159,7 +160,7 @@ for j = 1:iterations
                 Rs{k_user}(:,:,idx) * ...
                 (((G_all{k_user}(:,:,idx)' * H_all{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - eye(Br)) + sum_MSE{k_user}(:,:,idx) + G_all{k_user}(:,:,idx)' * G_all{k_user}(:,:,idx) * (VarN(k_user)/2))'; 
             
-            eta_sum{k_user}(j) = eta_sum{k_user}(j)+ trace(epslon{k_user}(:,:));
+            eta_sum(j, idx) = eta_sum(j, idx) + trace(epslon{k_user}(:,:));
         end
         
         

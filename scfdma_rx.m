@@ -13,7 +13,7 @@ N_x = Scfdma.N + Scfdma.l_cp;
 Nr      = size(G, 1);
 rx_x    = zeros(Nr, N*N_scSymb);
 Rx_x    = zeros(Nr, N*N_scSymb);
-Rx_fir  = zeros(1, N*N_scSymb);
+Rx_fir  = zeros(1, M*N_scSymb);
 Rx      = zeros(1, M*N_scSymb);
 rx      = zeros(1, N_scSymb*M);
 
@@ -24,11 +24,11 @@ for i_bl = 0:N_scSymb-1
 
     Rx_x(:, i_bl*N + (1:N)) = fft(rx_x(:, i_bl*N + (1:N)), N, 2)./sqrt(N);
     
-    for idx = 1:N
-        Rx_fir(:, i_bl*N + idx) = G(:,:,idx)' * Rx_x(:, i_bl*N + idx);
+    for idx = 1:M
+        Rx_fir(:, i_bl*N + idx) = G(:,:,idx+nu_0)' * Rx_x(:, i_bl*N + idx + nu_0);
     end
     
-    Rx(:, i_bl*M + (1:M))   = Rx_fir(:, i_bl*N + nu_0 +(1:M));
+    Rx(:, i_bl*M + (1:M))   = Rx_fir(:, i_bl*N + (1:M));
 
     rx(:, i_bl*M + (1:M))   = ifft(Rx(:, i_bl*M + (1:M)), M, 2).* sqrt(M);
 end

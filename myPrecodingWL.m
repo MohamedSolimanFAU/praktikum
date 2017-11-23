@@ -31,7 +31,7 @@ epslon     = cell(N_user, 1);
 % eta_sum    = cell(N_user, 1);
 
 count = 10;
-iterations = 5000;
+iterations = 1;
 
 Convergence_check(iterations, N) = 0;
 eta_sum = zeros(iterations, N);
@@ -56,7 +56,7 @@ end
 
 for k_user = 1:N_user
     Rs{k_user}       = fft(WL.Rs(:,:,k_user), N, 3);
-%     eta_sum{k_user}  = zeros(1, iterations); % sum mean square error
+    %     eta_sum{k_user}  = zeros(1, iterations); % sum mean square error
 end
 
 %% Initializing beamforming vector
@@ -88,19 +88,19 @@ for idx = 1:N
 end
 
 
-for j = 1:iterations
-    for k_user = 1:N_user
-        lambda_new{k_user}      = zeros(1,N);
-        lambda_old{k_user}      = zeros(1,N);
-        sumV_temp{k_user}       = zeros(Dr, Dr, N);
-        V_temp{k_user}          = zeros(Dr, Br, N);
-        sum_lambda{k_user}      = zeros(Dr, Dr, N);
+for idx = 1:N
+    for j = 1:iterations
+        for k_user = 1:N_user
+            lambda_new{k_user}      = zeros(1,N);
+            lambda_old{k_user}      = zeros(1,N);
+            sumV_temp{k_user}       = zeros(Dr, Dr, N);
+            V_temp{k_user}          = zeros(Dr, Br, N);
+            sum_lambda{k_user}      = zeros(Dr, Dr, N);
+            
+            sum_MSE{k_user} = zeros(Br, Br, N);
+            %         epslon{k_user}  = zeros(j, N);
+        end
         
-        sum_MSE{k_user} = zeros(Br, Br, N);
-%         epslon{k_user}  = zeros(j, N);       
-    end
-    
-    for idx = 1:N
         for k_user = 1:N_user
             V_old{k_user}(:,:,idx)  = V_new{k_user}(:,:,idx);
             for j_user = 1:N_user
@@ -155,10 +155,10 @@ for j = 1:iterations
                 if k_user ~= j_user
                     sum_MSE{k_user}(:,:,idx) = sum_MSE{k_user}(:,:,idx) + G_all{k_user}(:,:,idx)' * H_all{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx);
                 end
-            end           
+            end
             epslon{k_user}(:,:) = (((G_all{k_user}(:,:,idx)' * H_all{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - eye(Br)) + sum_MSE{k_user}(:,:,idx) + G_all{k_user}(:,:,idx)' * G_all{k_user}(:,:,idx) * (VarN(k_user)/2)) *...
                 Rs{k_user}(:,:,idx) * ...
-                (((G_all{k_user}(:,:,idx)' * H_all{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - eye(Br)) + sum_MSE{k_user}(:,:,idx) + G_all{k_user}(:,:,idx)' * G_all{k_user}(:,:,idx) * (VarN(k_user)/2))'; 
+                (((G_all{k_user}(:,:,idx)' * H_all{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx)) - eye(Br)) + sum_MSE{k_user}(:,:,idx) + G_all{k_user}(:,:,idx)' * G_all{k_user}(:,:,idx) * (VarN(k_user)/2))';
             
             eta_sum(j, idx) = eta_sum(j, idx) + trace(epslon{k_user}(:,:));
         end

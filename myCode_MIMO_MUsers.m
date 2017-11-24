@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 15; % in dB
+EbNo      = 0:5:25; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,7 +23,7 @@ bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 1000;
 type        = 'ITU-PA';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -123,7 +123,7 @@ for i_ebNo = 1:length(EbNo)
         
         rx_sc = cell(N_user, 1);
         for i_user = 1:N_user
-            rx_sc{i_user} = scfdma_ch(tx_sc{i_user}, h_ch(i_user, :), VarN(i_user, i_ebNo), 'awgn');
+            rx_sc{i_user} = scfdma_ch(tx_sc, h_ch(i_user, :), VarN(i_user, i_ebNo), 'awgn');
         end
         %% Receiver
         
@@ -159,7 +159,7 @@ toc
 %num2str()
 %save(mat_file_name,'BER','BLER');
 
-save('results/SL_Nu2_Nt2_Nr2_PB.mat', 'BER', 'BLER', 'bitError', 'N_user', 'n_ch', 'Nr', 'Nt', 'subframeError', 'numSubframes');
+save('results/SL_Nu3_Nt2_Nr2_PA.mat', 'BER', 'BLER', 'bitError', 'N_user', 'n_ch', 'Nr', 'Nt', 'subframeError', 'numSubframes');
 
 figure;
 for i = 1:N_user
@@ -173,13 +173,13 @@ grid on;
 legend('User-1', 'User-2', 'User-3');
 
 
-% figure;
-% for i = 1:N_user
-%     semilogy(EbNo, BLER(i,:)/n_ch, 'o-', 'Linewidth', 2);
-%     hold on;
-% end
-% title(['MIMO, ','Ch: "ITU-P', type, '", Snapshots = ', num2str(N_snapshot), ', Simulations = ', num2str(n_ch)]);
-% xlabel('Eb/No(dB)');
-% ylabel('BLER')
-% grid on;
-% legend('User-1', 'User-2', 'User-3');
+figure;
+for i = 1:N_user
+    semilogy(EbNo, BLER(i,:)/n_ch, 'o-', 'Linewidth', 2);
+    hold on;
+end
+title(['MIMO, ','Ch: "ITU-P', type, '", Snapshots = ', num2str(N_snapshot), ', Simulations = ', num2str(n_ch)]);
+xlabel('Eb/No(dB)');
+ylabel('BLER')
+grid on;
+legend('User-1', 'User-2', 'User-3');

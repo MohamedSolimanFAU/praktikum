@@ -6,9 +6,9 @@ N_user = size(h_ch, 2);
 Nr     = size(h_ch{1}, 1);
 qh     = size(h_ch{1}, 3);
 
-rx_fc = zeros(Nr, length(tx_sc) + qh - 1);
+rx_fc = zeros(Nr, length(tx_sc{1}) + qh - 1);
 for i_user = 1:N_user
-    rx_fc  = rx_fc + convLin(tx_sc , h_ch{i_user});
+    rx_fc  = rx_fc + convLin(tx_sc{i_user} , h_ch{i_user});
 end
 
 % rx_fc  = convLin(tx_sc , h_ch);

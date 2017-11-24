@@ -88,8 +88,8 @@ for idx = 1:N
 end
 
 
-for idx = 1:N
-    for j = 1:iterations
+for j = 1:iterations
+    for idx = 1:N
         for k_user = 1:N_user
             lambda_new{k_user}      = zeros(1,N);
             lambda_old{k_user}      = zeros(1,N);

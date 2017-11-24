@@ -29,7 +29,7 @@ epslon     = cell(N_user, 1);
 tr_vk_vkh  = cell(N_user, 1);
 
 count = 10;
-iterations = 2000;
+iterations = 500;
 
 %% Initializing v_MMSE_k & g_MMSE_k
 
@@ -158,8 +158,6 @@ for idx = 1:N
         
         
         for k_user = 1:N_user
-%             Convergence_check(j, idx) = Convergence_check(j, idx) + sqrt((V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx))'*(V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx)));
-%             Convergence_check(j, idx) = Convergence_check(j, idx) + sum(abs(V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx)));
             Convergence_check(j, idx) = Convergence_check(j, idx) + norm(V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx), 2);
         end
         if Convergence_check(j, idx) <= 10^-5

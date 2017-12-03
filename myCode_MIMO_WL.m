@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 25; % in dB
+EbNo      = 0:5:25; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -97,10 +97,11 @@ end
 
 tx_sc  = cell(N_user, 1);
 check  = cell(N_user, 1);
-count  = 1;
 
 tic
 for i_ebNo = 1:length(EbNo)
+    count  = 1;
+    
     numBits    = zeros(1, N_user);
     bitError   = zeros(1, N_user);
     
@@ -144,7 +145,7 @@ for i_ebNo = 1:length(EbNo)
         
         rx_sc = cell(N_user, 1);
         for i_user = 1:N_user
-            rx_sc{i_user} = scfdma_ch(tx_sc{i_user}, h_ch(i_user, :), VarN(i_user, i_ebNo), 'awgn');
+            rx_sc{i_user} = scfdma_ch(tx_sc, h_ch(i_user, :), VarN(i_user, i_ebNo), 'awgn');
         end
         %% Receiver
         

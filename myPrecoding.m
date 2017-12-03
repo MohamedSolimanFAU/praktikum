@@ -31,6 +31,9 @@ tr_vk_vkh  = cell(N_user, 1);
 count = 10;
 iterations = 500;
 
+Convergence_check(iterations, N) = 0;
+eta_sum = zeros(iterations, N);     % sum mean square error
+
 %% Initializing v_MMSE_k & g_MMSE_k
 
 for k_user = 1:N_user
@@ -69,18 +72,15 @@ for idx = 1:N
     end
 end
 
-Convergence_check(iterations, N) = 0;
-eta_sum = zeros(iterations, N);     % sum mean square error
-
 for k_user = 1:N_user
-            lambda_new{k_user}      = zeros(1,N);
-            lambda_old{k_user}      = zeros(1,N);
-            lambda_temp{k_user}     = zeros(count,N);
-            sumV_temp{k_user}       = zeros(Nr, Nt, N);
-            V_temp{k_user}          = zeros(Nt, 1, N);
-            sum_lambda{k_user}      = zeros(Nr, Nt, N);
-            
-            sum_MSE{k_user}         = zeros(1, 1, N);
+    lambda_new{k_user}      = zeros(1,N);
+    lambda_old{k_user}      = zeros(1,N);
+    lambda_temp{k_user}     = zeros(count,N);
+    sumV_temp{k_user}       = zeros(Nr, Nt, N);
+    V_temp{k_user}          = zeros(Nt, 1, N);
+    sum_lambda{k_user}      = zeros(Nr, Nt, N);
+    
+    sum_MSE{k_user}         = zeros(1, 1, N);
 end
     
 %% Update v_MMSE_k & g_MMSE_k
@@ -144,7 +144,7 @@ for idx = 1:N
             G_all{k_user}(:,:,idx) = pinv(sum_G{k_user}(:,:,idx) + VarN(k_user)*eye(Nr)) * H_ch{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx);
         end
         
-        
+        eta_sum(j, idx) = 0;
         for k_user = 1:N_user
             sum_MSE{k_user}(:,:,idx) = 0;
             for j_user = 1:N_user
@@ -160,7 +160,7 @@ for idx = 1:N
         for k_user = 1:N_user
             Convergence_check(j, idx) = Convergence_check(j, idx) + norm(V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx), 2);
         end
-        if Convergence_check(j, idx) <= 10^-5
+        if Convergence_check(j, idx) <= 10^-4
             break;
         end
     end

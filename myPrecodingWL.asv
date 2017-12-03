@@ -1,4 +1,4 @@
-function [ V_new, G_all ] = myPrecodingWL( H_all, H_ch, VarN, N, WL )
+function [ V_new, G_new ] = myPrecodingWL( H_all, H_ch, VarN, N, WL )
 %MYPRECODING_2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -7,6 +7,7 @@ N_user  = size(H_ch, 1);
 Nr      = size(H_ch{1},1);
 Nt      = size(H_ch{1},2);
 
+G_new   = cell(N_user, 1);
 G_all	= cell(N_user, 1);
 v_init  = cell(N_user, 1);
 V_init  = cell(N_user, 1);
@@ -29,7 +30,7 @@ sum_MSE    = cell(N_user, 1);
 epslon     = cell(N_user, 1);
 
 count = 10;
-iterations = 500;
+iterations = 1;
 
 Convergence_check(iterations, N) = 0;
 eta_sum = zeros(iterations, N);
@@ -42,7 +43,8 @@ Rs    = cell(N_user, 1);
 
 for k_user = 1:N_user
     V_new{k_user}       = zeros(Dr, Br, N);
-    G_all{k_user}       = zeros(2*Nr, Br, N);
+    G_new{k_user}       = zeros(2*Nt, Br, N);
+    G_all{k_user}       = zeros(2*Nt, Br, N);
     sum_G{k_user}  = zeros(2*Nr, 2*Nt, N);
     sum_V{k_user}       = zeros(2*Nr, 2*Nt, N);
     V_tempnorm{k_user}  = zeros(1, N);
@@ -145,7 +147,8 @@ for idx = 1:N
             for j_user = 1:N_user
                 sum_G_new{k_user}(:,:,idx)  = sum_G_new{k_user}(:,:,idx) + H_all{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx) * Rs{j_user}(:,:,idx) * V_new{j_user}(:,:,idx)'*H_all{k_user, j_user}(:,:,idx)';
             end
-            G_all{k_user}(:,:,idx) = pinv(sum_G_new{k_user}(:,:,idx) + (VarN(k_user)/2)*eye(2*Nr)) * H_all{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx) * Rs{k_user}(:,:,idx);
+            G_new{k_user}(:,:,idx) = pinv(sum_G_new{k_user}(:,:,idx) + (VarN(k_user)/2)*eye(2*Nr)) * H_all{k_user, k_user}(:,:,idx) * V_new{k_user}(:,:,idx) * Rs{k_user}(:,:,idx);
+            G_all{k_user}(:,:,idx) = G_new{k_user}(:,:,idx);
         end
         
         eta_sum(j, idx) = 0;

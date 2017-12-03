@@ -21,25 +21,6 @@ Rx_com  = zeros(1, M*N_scSymb);
 rx      = zeros(1, M*N_scSymb);
 
 
-% rx_cp   = [real(rx_sc); imag(rx_sc)];
-
-% G' in switch case will be calculated
-% NG      = size(G, 1);
-% switch NG
-%     case 1
-%         G = squeeze(G)';
-%     case 2
-%         G = squeeze(permute(conj(G),[2 1 3]));
-%     otherwise
-%         G = squeeze(permute(conj(G),[2 1 3]));
-% end
-
-% for i = 1:N
-%     for k = 1:Nr
-%         Gh_com(k,i) = G(1,k,i) + 1i * G(2,k,i);
-%     end
-% end
-
 for i_bl = 0:N_scSymb-1
     rx_x(:, i_bl*N+(1:N))   = rx_sc(:, i_bl*N_x + (l_cp + 1:N_x));
 

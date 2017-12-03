@@ -20,7 +20,7 @@ Tx_com  = zeros(Nt/2, N*N_scSymb);
 tx_x    = zeros(Nt/2, N*N_scSymb);
 tx_cp   = zeros(Nt/2, N*N_scSymb);
 
-V       = squeeze(V(:,:, nu_0+(1:M)));
+% V       = squeeze(V(:,:, nu_0+(1:M)));
 
 for i_bl = 0:N_scSymb-1
     Tx(:, i_bl*M+(1:M))          = fft(tx(:, i_bl*M+(1:M)),M, 2)./sqrt(M);
@@ -28,7 +28,7 @@ for i_bl = 0:N_scSymb-1
     Tx_aug(:, i_bl*M+(1:M))      = [real(Tx(:, i_bl*M+(1:M))); imag(Tx(:, i_bl*M+(1:M)))];
     
     for idx = 1:M
-        Tx_x(:, i_bl*N+nu_0+idx)   = V(:,:,idx) * Tx_aug(:, i_bl*M+idx);
+        Tx_x(:, i_bl*N+nu_0+idx)   = V(:,:,idx+nu_0) * Tx_aug(:, i_bl*M+idx);
     end
     % combine
     for idx = 1:N

@@ -15,7 +15,7 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 0:5:25; % in dB
+EbNo      = 15; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,7 +23,7 @@ bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1000;
+n_ch        = 500;
 type        = 'ITU-PA';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -159,7 +159,7 @@ toc
 %num2str()
 %save(mat_file_name,'BER','BLER');
 
-save('results/SL_Nu3_Nt2_Nr2_PA.mat', 'BER', 'BLER', 'bitError', 'N_user', 'n_ch', 'Nr', 'Nt', 'subframeError', 'numSubframes');
+save('results/SL_Nu3_Nt2_Nr2_PA_SNR15.mat', 'BER', 'BLER', 'bitError', 'N_user', 'n_ch', 'Nr', 'Nt', 'subframeError', 'numSubframes', 'i_ch');
 
 figure;
 for i = 1:N_user

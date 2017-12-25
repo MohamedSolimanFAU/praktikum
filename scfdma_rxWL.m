@@ -14,8 +14,8 @@ Nr      = size(G, 1);
 rx_x    = zeros(Nr/2, N*N_scSymb);
 Rx_x    = zeros(Nr/2, N*N_scSymb);
 Rx_aug  = zeros(Nr, N*N_scSymb);
-Rx_fir  = zeros(Nr/2, N*N_scSymb);
-Rx      = zeros(Nr/2, M*N_scSymb);
+Rx_fir  = zeros(2, N*N_scSymb);     % Nr/2
+Rx      = zeros(2, M*N_scSymb);     % Nr/2
 Rx_com  = zeros(1, M*N_scSymb);
 
 rx      = zeros(1, M*N_scSymb);

@@ -29,7 +29,7 @@ sum_MSE    = cell(N_user, 1);
 epslon     = cell(N_user, 1);
 
 count = 10;
-iterations = 500;
+iterations = 1;
 
 Convergence_check(iterations, N) = 0;
 eta_sum = zeros(iterations, N);
@@ -43,8 +43,8 @@ Rs    = cell(N_user, 1);
 for k_user = 1:N_user
     V_new{k_user}       = zeros(Dr, Br, N);
     G_all{k_user}       = zeros(2*Nr, Br, N);
-    sum_G{k_user}  = zeros(2*Nr, 2*Nt, N);
-    sum_V{k_user}       = zeros(2*Nr, 2*Nt, N);
+    sum_G{k_user}       = zeros(2*Nr, 2*Nr, N);
+    sum_V{k_user}       = zeros(2*Nt, 2*Nt, N);
     V_tempnorm{k_user}  = zeros(1, N);
     V_norm{k_user}      = zeros(1, N);
 end
@@ -141,7 +141,7 @@ for idx = 1:N
         end
         
         for k_user = 1:N_user
-            sum_G_new{k_user}(:,:,idx)  = zeros(2*Nr, 2*Nt);
+            sum_G_new{k_user}(:,:,idx)  = zeros(2*Nr, 2*Nr);
             for j_user = 1:N_user
                 sum_G_new{k_user}(:,:,idx)  = sum_G_new{k_user}(:,:,idx) + H_all{k_user, j_user}(:,:,idx) * V_new{j_user}(:,:,idx) * Rs{j_user}(:,:,idx) * V_new{j_user}(:,:,idx)'*H_all{k_user, j_user}(:,:,idx)';
             end

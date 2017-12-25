@@ -19,15 +19,15 @@ EbNo      = 15; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
-bits_per_symb  = [2 2 2];
+bits_per_symb  = [2 2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 500;
+n_ch        = 1;
 type        = 'ITU-PA';
 N_snapshot  = 20000;
 Nr          = 2;
-Nt          = 2;
+Nt          = 4;
 
 start       = 1;
 offset      = [0 200 434 675 777] + start - 1; % starting point for
@@ -173,13 +173,13 @@ grid on;
 legend('User-1', 'User-2', 'User-3');
 
 
-figure;
-for i = 1:N_user
-    semilogy(EbNo, BLER(i,:)/n_ch, 'o-', 'Linewidth', 2);
-    hold on;
-end
-title(['MIMO, ','Ch: "ITU-P', type, '", Snapshots = ', num2str(N_snapshot), ', Simulations = ', num2str(n_ch)]);
-xlabel('Eb/No(dB)');
-ylabel('BLER')
-grid on;
-legend('User-1', 'User-2', 'User-3');
+% figure;
+% for i = 1:N_user
+%     semilogy(EbNo, BLER(i,:)/n_ch, 'o-', 'Linewidth', 2);
+%     hold on;
+% end
+% title(['MIMO, ','Ch: "ITU-P', type, '", Snapshots = ', num2str(N_snapshot), ', Simulations = ', num2str(n_ch)]);
+% xlabel('Eb/No(dB)');
+% ylabel('BLER')
+% grid on;
+% legend('User-1', 'User-2', 'User-3');

@@ -14,7 +14,7 @@ N_x = Scfdma.N + Scfdma.l_cp;
 
 Nt      = size(V, 1);
 Tx      = zeros(1, M*N_scSymb);
-Tx_aug  = zeros(Nt/2, M*N_scSymb);
+Tx_aug  = zeros(2, M*N_scSymb);         % Nt/2
 Tx_x    = zeros(Nt, N*N_scSymb);
 Tx_com  = zeros(Nt/2, N*N_scSymb);
 tx_x    = zeros(Nt/2, N*N_scSymb);

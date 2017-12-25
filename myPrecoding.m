@@ -29,7 +29,7 @@ epslon     = cell(N_user, 1);
 tr_vk_vkh  = cell(N_user, 1);
 
 count = 10;
-iterations = 500;
+iterations = 1;
 
 Convergence_check(iterations, N) = 0;
 eta_sum = zeros(iterations, N);     % sum mean square error
@@ -54,9 +54,9 @@ for k_user = 1:N_user
 %     V_init{k_user}     = fft(v_init{k_user}, N, 3);
     V_new{k_user}      = zeros(Nt, 1, N);
     V_old{k_user}      = zeros(Nt, 1, N);
-    G_all{k_user}      = zeros(Nt, 1, N);
-    sum_G{k_user}      = zeros(Nr, Nt, N);
-    sum_V{k_user}      = zeros(Nr, Nt, N);
+    G_all{k_user}      = zeros(Nr, 1, N);
+    sum_G{k_user}      = zeros(Nr, Nr, N);
+    sum_V{k_user}      = zeros(Nt, Nt, N);
     V_tempnorm{k_user} = zeros(1, N);
     V_norm{k_user}     = zeros(1, N);
     tr_vk_vkh{k_user}  = zeros(count, N);
@@ -76,9 +76,9 @@ for k_user = 1:N_user
     lambda_new{k_user}      = zeros(1,N);
     lambda_old{k_user}      = zeros(1,N);
     lambda_temp{k_user}     = zeros(count,N);
-    sumV_temp{k_user}       = zeros(Nr, Nt, N);
+    sumV_temp{k_user}       = zeros(Nt, Nt, N);
     V_temp{k_user}          = zeros(Nt, 1, N);
-    sum_lambda{k_user}      = zeros(Nr, Nt, N);
+    sum_lambda{k_user}      = zeros(Nt, Nt, N);
     
     sum_MSE{k_user}         = zeros(1, 1, N);
 end
@@ -90,7 +90,7 @@ for idx = 1:N
         for k_user = 1:N_user
             
             V_old{k_user}(:,:,idx)  = V_new{k_user}(:,:,idx);
-            sumV_temp{k_user}(:,:,idx)  = zeros(Nr, Nt);
+            sumV_temp{k_user}(:,:,idx)  = zeros(Nt, Nt);
             for j_user = 1:N_user
                 sumV_temp{k_user}(:,:,idx)  = sumV_temp{k_user}(:,:,idx) + (H_ch{j_user, k_user}(:,:,idx)'*G_all{j_user}(:,:,idx)*G_all{j_user}(:,:,idx)'*H_ch{j_user, k_user}(:,:,idx));
             end
@@ -105,7 +105,7 @@ for idx = 1:N
                 V_new{k_user}(:,:,idx) = V_temp{k_user}(:,:,idx);
 %             elseif V_tempnorm{k_user}(1,idx) > 1
             elseif trace(V_temp{k_user}(:,:,idx)*V_temp{k_user}(:,:,idx)') > 1
-                sum_lambda{k_user}(:,:,idx)  = zeros(Nr, Nt);
+                sum_lambda{k_user}(:,:,idx)  = zeros(Nt, Nt);
                 for j_user = 1:N_user
                     sum_lambda{k_user}(:,:,idx)  = sum_lambda{k_user}(:,:,idx) + H_ch{j_user, k_user}(:,:,idx)'*G_all{j_user}(:,:,idx)*G_all{j_user}(:,:,idx)'*H_ch{j_user, k_user}(:,:,idx);
                 end
@@ -137,7 +137,7 @@ for idx = 1:N
         end
         
         for k_user = 1:N_user
-            sum_G{k_user}(:,:,idx)  = zeros(Nr, Nt);
+            sum_G{k_user}(:,:,idx)  = zeros(Nr, Nr);
             for j_user = 1:N_user
                 sum_G{k_user}(:,:,idx)  = sum_G{k_user}(:,:,idx) + H_ch{k_user, j_user}(:,:,idx)*V_new{j_user}(:,:,idx)*V_new{j_user}(:,:,idx)'*H_ch{k_user, j_user}(:,:,idx)';
             end

@@ -1,0 +1,16 @@
+\pdfoutput =0
+\let \origdocument \document 
+\let \EndPreamble \endinput 
+\def \document {\endgroup \endinput }
+\input {report_template}
+\usepackage [active,tightpage]{preview}
+\let \document \origdocument 
+\pagestyle {empty}
+\begin {document}
+\centering \null \vfill 
+\begin {preview}
+ \psfrag {U}[l][l]{Unicast cells} \psfrag {M}[l][l]{Multicast cells} \psfrag {Mobiltelefone}[l][l]{UEs} 
+\includegraphics [width=0.5\textwidth ] {example2}
+\end {preview}
+\vfill \end {document}
+

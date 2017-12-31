@@ -29,7 +29,7 @@ epslon     = cell(N_user, 1);
 tr_vk_vkh  = cell(N_user, 1);
 
 count = 10;
-iterations = 1;
+iterations = 500;
 
 Convergence_check(iterations, N) = 0;
 eta_sum = zeros(iterations, N);     % sum mean square error

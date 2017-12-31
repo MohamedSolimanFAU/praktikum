@@ -29,7 +29,7 @@ sum_MSE    = cell(N_user, 1);
 epslon     = cell(N_user, 1);
 
 count = 10;
-iterations = 1;
+iterations = 500;
 
 Convergence_check(iterations, N) = 0;
 eta_sum = zeros(iterations, N);
@@ -166,7 +166,7 @@ for idx = 1:N
         for k_user = 1:N_user
             Convergence_check(j, idx) = Convergence_check(j, idx) + trace( (V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx)) * (V_new{k_user}(:,:,idx) - V_old{k_user}(:,:,idx))' );
         end
-        if Convergence_check(j, idx) <= 10^-5
+        if Convergence_check(j, idx) <= 10^-4
             break;
         end
     end

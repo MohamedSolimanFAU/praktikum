@@ -15,19 +15,19 @@ clc;
 %% Variable initialization
 
 % SNR
-EbNo      = 25; % in dB
+EbNo      = 0; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
-bits_per_symb  = [2 2 2 2 2];
+bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 1000;
 type        = 'ITU-PA';
 N_snapshot  = 20000;
 Nr          = 2;
-Nt          = 4;
+Nt          = 2;
 
 start       = 1;
 offset      = [0 200 434 656 777] + start - 1; % starting point for

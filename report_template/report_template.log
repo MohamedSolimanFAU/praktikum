@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.10.22)  28 DEC 2017 19:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.10.22)  16 JAN 2018 17:58
 entering extended mode
 **report_template.tex
 (report_template.tex
@@ -556,13 +556,35 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_below_intertext_sep=\dimen166
 \l_MT_above_shortintertext_sep=\dimen167
 \l_MT_below_shortintertext_sep=\dimen168
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption.sty"
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption3.sty"
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen169
+\captionmargin@=\dimen170
+\captionwidth=\dimen171
+\caption@tempdima=\dimen172
+\caption@indent=\dimen173
+\caption@parindent=\dimen174
+\caption@hangindent=\dimen175
+)
+Package caption Info: KOMA-Script document class.
+\c@ContinuedFloat=\count138
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\subcaption.sty"
+Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
+\c@subfigure=\count139
+\c@subtable=\count140
 ) (format.tex)
 
 Package scrpage2 Warning: you've used pagestyle ``headings''.
 (scrpage2)                You should not use this pagestyle with a
 (scrpage2)                scrpage2-pagestyle!
 (scrpage2)                You should use pagestyle ``useheadings'' instead
-(scrpage2)                 on input line 17.
+(scrpage2)                 on input line 19.
 
 (report_template.aux
 
@@ -577,38 +599,92 @@ LaTeX Warning: Label `fig:example' multiply defined.
 
 LaTeX Warning: Label `fig:example' multiply defined.
 
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:test' multiply defined.
+
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:test' multiply defined.
+
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:test' multiply defined.
+
 )
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 27.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\t1lmr.fd"
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count138
-\scratchdimen=\dimen169
+\scratchcounter=\count141
+\scratchdimen=\dimen176
 \scratchbox=\box44
-\nofMPsegments=\count139
-\nofMParguments=\count140
+\nofMPsegments=\count142
+\nofMParguments=\count143
 \everyMPshowfont=\toks29
-\MPscratchCnt=\count141
-\MPscratchDim=\dimen170
-\MPnumerator=\count142
-\makeMPintoPDFobject=\count143
+\MPscratchCnt=\count144
+\MPscratchDim=\dimen177
+\MPnumerator=\count145
+\makeMPintoPDFobject=\count146
 \everyMPtoPDFconversion=\toks30
 )
-LaTeX Info: Redefining \microtypecontext on input line 25.
+LaTeX Info: Redefining \microtypecontext on input line 27.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -622,7 +698,9 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for T1+lmss on input line 44.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Try loading font information for T1+lmss on input line 46.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\t1lmss.fd"
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -631,35 +709,35 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `lmss' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 44.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 46.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 44.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 46.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omllmm.fd"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 44.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 46.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omslmsy.fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 44.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 46.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omxlmex.fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <17.28> on input line 44.
+(Font)              <17.28> on input line 46.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 44.
+(Font)              <12> on input line 46.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 44.
-LaTeX Font Info:    Try loading font information for U+msa on input line 44.
+(Font)              <10> on input line 46.
+LaTeX Font Info:    Try loading font information for U+msa on input line 46.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -667,7 +745,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ("C:\Program Files\MiKTeX 2.9\tex\latex\microtype\mt-msa.cfg"
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 44.
+LaTeX Font Info:    Try loading font information for U+msb on input line 46.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -686,8 +764,8 @@ Non-PDF special ignored!
 <figures/fig1.png, id=8, 877.02657pt x 432.86719pt>
 File: figures/fig1.png Graphic file (type png)
  <use figures/fig1.png>
-Package pdftex.def Info: figures/fig1.png used on input line 63.
-(pdftex.def)             Requested size: 435.32419pt x 214.86105pt.
+Package pdftex.def Info: figures/fig1.png used on input line 65.
+(pdftex.def)             Requested size: 338.5863pt x 167.11342pt.
 
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
@@ -696,26 +774,26 @@ Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 File: figures/fig2.png Graphic file (type png)
 
 <use figures/fig2.png>
-Package pdftex.def Info: figures/fig2.png used on input line 76.
-(pdftex.def)             Requested size: 435.32419pt x 138.99576pt.
+Package pdftex.def Info: figures/fig2.png used on input line 78.
+(pdftex.def)             Requested size: 338.5863pt x 108.10553pt.
  <figures/fig3.png, id=16, 1093.83656pt x 566.115pt>
 File: figures/fig3.png Graphic file (type png)
 
 <use figures/fig3.png>
-Package pdftex.def Info: figures/fig3.png used on input line 87.
-(pdftex.def)             Requested size: 435.32419pt x 225.30174pt.
+Package pdftex.def Info: figures/fig3.png used on input line 89.
+(pdftex.def)             Requested size: 338.5863pt x 175.23468pt.
+
+Underfull \vbox (badness 5417) has occurred while \output is active []
+
 
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
 
 [3 <./figures/fig2.png>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 102.
+(Font)              <8> on input line 104.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 102.
-
-Underfull \vbox (badness 1178) has occurred while \output is active []
-
+(Font)              <6> on input line 104.
 
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
@@ -725,38 +803,103 @@ Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 File: figures/sl_system_model.png Graphic file (type png)
 
 <use figures/sl_system_model.png>
-Package pdftex.def Info: figures/sl_system_model.png used on input line 127.
-(pdftex.def)             Requested size: 435.32419pt x 166.87431pt.
+Package pdftex.def Info: figures/sl_system_model.png used on input line 129.
+(pdftex.def)             Requested size: 338.5863pt x 129.79008pt.
 
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
 
-[5]
-Overfull \vbox (0.77843pt too high) has occurred while \output is active []
-
-
-[6 <./figures/sl_system_model.png>]
-<figures/wl_system_model.png, id=42, 811.53188pt x 576.65437pt>
+[5 <./figures/sl_system_model.png>]
+<figures/wl_system_model.png, id=34, 811.53188pt x 576.65437pt>
 File: figures/wl_system_model.png Graphic file (type png)
 
 <use figures/wl_system_model.png>
-Package pdftex.def Info: figures/wl_system_model.png used on input line 191.
-(pdftex.def)             Requested size: 435.32419pt x 309.33855pt.
+Package pdftex.def Info: figures/wl_system_model.png used on input line 193.
+(pdftex.def)             Requested size: 338.5863pt x 240.59175pt.
+
+Overfull \vbox (0.77843pt too high) has occurred while \output is active []
+
+
+[6]
+Overfull \hbox (58.72974pt too wide) in paragraph at lines 220--220
+[] 
+ []
+
 
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
 
 [7 <./figures/wl_system_model.png>]
-Overfull \hbox (58.72974pt too wide) in paragraph at lines 218--218
-[] 
- []
-
-
-Overfull \hbox (6.92299pt too wide) detected at line 243
+Overfull \hbox (6.92299pt too wide) detected at line 245
 \OML/lmm/m/it/12 [] \OT1/lmr/m/n/12 = \OML/lmm/m/it/12 [] \OT1/lmr/m/n/12 + [
 ]
  []
 
+LaTeX Font Info:    Try loading font information for OMS+lmr on input line 262.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omslmr.fd"
+File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 262.
+
+<figures/sl_nu3_ber.jpg, id=49, 1927.2pt x 966.61125pt>
+File: figures/sl_nu3_ber.jpg Graphic file (type jpg)
+
+<use figures/sl_nu3_ber.jpg>
+Package pdftex.def Info: figures/sl_nu3_ber.jpg used on input line 274.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 275.
+
+<figures/sl_nu3_bler.jpg, id=50, 1927.2pt x 966.61125pt>
+File: figures/sl_nu3_bler.jpg Graphic file (type jpg)
+
+<use figures/sl_nu3_bler.jpg>
+Package pdftex.def Info: figures/sl_nu3_bler.jpg used on input line 280.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+
+<figures/sl_nu4_ber.jpg, id=51, 1927.2pt x 966.61125pt>
+File: figures/sl_nu4_ber.jpg Graphic file (type jpg)
+
+<use figures/sl_nu4_ber.jpg>
+Package pdftex.def Info: figures/sl_nu4_ber.jpg used on input line 292.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+
+<figures/sl_nu4_bler.jpg, id=52, 1927.2pt x 966.61125pt>
+File: figures/sl_nu4_bler.jpg Graphic file (type jpg)
+
+<use figures/sl_nu4_bler.jpg>
+Package pdftex.def Info: figures/sl_nu4_bler.jpg used on input line 298.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+
+<figures/sl_nu5_ber.jpg, id=53, 1927.2pt x 966.61125pt>
+File: figures/sl_nu5_ber.jpg Graphic file (type jpg)
+
+<use figures/sl_nu5_ber.jpg>
+Package pdftex.def Info: figures/sl_nu5_ber.jpg used on input line 311.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+
+<figures/sl_nu5_bler.jpg, id=54, 1927.2pt x 966.61125pt>
+File: figures/sl_nu5_bler.jpg Graphic file (type jpg)
+
+<use figures/sl_nu5_bler.jpg>
+Package pdftex.def Info: figures/sl_nu5_bler.jpg used on input line 317.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+
+<figures/Wl_nu3_ber.jpg, id=55, 1927.2pt x 966.61125pt>
+File: figures/Wl_nu3_ber.jpg Graphic file (type jpg)
+
+<use figures/Wl_nu3_ber.jpg>
+Package pdftex.def Info: figures/Wl_nu3_ber.jpg used on input line 331.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+
+<figures/Wl_nu3_bler.jpg, id=56, 1927.2pt x 966.61125pt>
+File: figures/Wl_nu3_bler.jpg Graphic file (type jpg)
+
+<use figures/Wl_nu3_bler.jpg>
+Package pdftex.def Info: figures/Wl_nu3_bler.jpg used on input line 337.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
 
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
@@ -765,36 +908,44 @@ Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
 
-[9] (report_template.aux)
+[9 <./figures/sl_nu3_ber.jpg> <./figures/sl_nu3_bler.jpg> <./figures/sl_nu4_ber
+.jpg> <./figures/sl_nu4_bler.jpg> <./figures/sl_nu5_ber.jpg> <./figures/sl_nu5_
+bler.jpg> <./figures/Wl_nu3_ber.jpg> <./figures/Wl_nu3_bler.jpg>]
+Overfull \vbox (0.77843pt too high) has occurred while \output is active []
+
+
+[10] (report_template.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 13024 strings out of 493671
- 231583 string characters out of 3143855
- 358105 words of memory out of 3000000
- 16109 multiletter control sequences out of 15000+200000
- 54035 words of font info for 87 fonts, out of 3000000 for 9000
+ 14194 strings out of 493671
+ 253086 string characters out of 3143855
+ 381246 words of memory out of 3000000
+ 17250 multiletter control sequences out of 15000+200000
+ 61370 words of font info for 97 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 45i,20n,55p,10353b,338s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Program Fil
-es/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fon
-ts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ma
-thex.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}<C:/Program 
+ 57i,20n,100p,10353b,673s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Fil
+es/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program Files/MiKTeX 2.9/fonts/e
+nc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm
+.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}<C:/Program 
 Files/MiKTeX 2.9/fonts/type1/public/lm/lmex10.pfb><C:/Program Files/MiKTeX 2.9/
-fonts/type1/public/lm/lmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/lm/lmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi8.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files/MiK
-TeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
-1/public/lm/lmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmro12.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/public/lm/lmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
-/lm/lmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy8.pfb>
-Output written on report_template.pdf (9 pages, 430874 bytes).
+fonts/type1/public/lm/lmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/lm/lmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi6.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi8.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr17
+.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr6.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/lm/lmro12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm
+/lmssbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:
+/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy6.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/public/lm/lmsy8.pfb>
+Output written on report_template.pdf (10 pages, 1534053 bytes).
 PDF statistics:
- 102 PDF objects out of 1000 (max. 8388607)
+ 121 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 14874 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 19010 words of extra memory for PDF output out of 20736 (max. 10000000)
 

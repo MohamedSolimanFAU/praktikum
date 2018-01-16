@@ -25,7 +25,7 @@ Nr          = 2;
 Nt          = 2;
 
 start       = 1;
-offset      = [0 200 434 656] + start - 1; % starting point for
+offset      = [0 200 434 656 777] + start - 1; % starting point for
 
 % f = generate_channel(type, Nr, Nt, N_snapshot);
 load([ 'LTE_channel_' type '_Anz' num2str(N_snapshot) '_cell_NR' num2str(Nr) '_NT' num2str(Nt) '.mat' ]);
@@ -117,6 +117,9 @@ for i_ebNo = 1:length(EbNo)
                 h_imag = imag(H_ch{i_user, j_user});
                 H_all{i_user, j_user} = [h_real -h_imag; h_imag h_real];
                 count = count + 1;
+            end
+            if count > N_snapshot
+                count = 1;
             end
         end
         

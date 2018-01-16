@@ -9,6 +9,8 @@
 \usepackage{microtype}
 \usepackage[english]{babel}
 \usepackage{mathtools}
+\usepackage{caption}
+\usepackage{subcaption}
 % \usepackage{hyperref}
 \input{format}
 
@@ -60,7 +62,7 @@ One of the main problems for wireless multimedia applications is the demand for 
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{figures/fig1}
+\includegraphics[width=0.7\textwidth]{figures/fig1}
 \end{center}
 \caption{Block diagram of an SC-FDMA transceiver.} %\cite{Example09}.
 \label{fig:example}
@@ -73,7 +75,7 @@ The transmitter first groups the modulation symbols into blocks that contains N 
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{figures/fig2}
+\includegraphics[width=0.7\textwidth]{figures/fig2}
 \end{center}
 \caption{Sub-carrier mapping within distribution mode and localized mode.} %\cite{Example09}.
 \label{fig:example}
@@ -84,7 +86,7 @@ Basically, there are two modes for sub-carrier mapping, distributed and localize
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{figures/fig3}
+\includegraphics[width=0.7\textwidth]{figures/fig3}
 \end{center}
 \caption{Frame/slot structure in 3GPP LTE SC-FDMA uplink} 
 \label{fig:example}
@@ -124,7 +126,7 @@ In our system model, we consider an SC-FDMA scheme with a K-user MIMO interferen
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{figures/sl_system_model.png}
+\includegraphics[width=0.7\textwidth]{figures/sl_system_model.png}
 \end{center}
 \caption{Block diagram of Linear Transceiver} 
 \label{fig:example}
@@ -188,7 +190,7 @@ The received filter is optimized according to:
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{figures/wl_system_model.png}
+\includegraphics[width=0.7\textwidth]{figures/wl_system_model.png}
 \end{center}
 \caption{Block diagram of Widely Linear Transceiver} 
 \label{fig:example}
@@ -250,13 +252,95 @@ The receive filter is updated according to:
 	G_{MMSE, k}^{new}[\mu] = ( \, \sum_{j=1}^{K}{\tilde{H}_{kj}[\mu] V_j[\mu] \tilde{R}_{\tilde{s}} V_j^H[\mu] \tilde{H}_{kj}^H[\mu] + \sigma^2 I})^{-1} \, \tilde{H}_{kk}[\mu] V_k[\mu] \tilde{R}_{\tilde{s}}
 \end{equation}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Simulation results}
 
+In this section, the simulation results are illustrated for both cases of strictly and widely linear filter using SC-FDMA modulation scheme. These are the system parameters values that defined in this system:
+\begin{itemize}
+	\item $M = 300, N = 512, \nu_o = 60, N_t = 2, N_r = 2$
+	\item Channel: ITU-PA
+	\item Realizations: 1000 as reference case, 500 for precoding
+\end{itemize}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Conclusions}
+% Strictly linear filter
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/sl_nu3_ber}
+  \caption{BER vs $E_b/N_o$} 
+  \label{fig:example}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/sl_nu3_bler}
+  \caption{BLER vs $E_b/N_o$}
+  \label{fig:example}
+\end{subfigure}
+\caption{QPSK, Strictly linear filter, $N_{users} = 3$, $N_t = N_r = 2$}
+\label{fig:test}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/sl_nu4_ber}
+  \caption{BER vs $E_b/N_o$} 
+  \label{fig:example}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/sl_nu4_bler}
+  \caption{BLER vs $E_b/N_o$}
+  \label{fig:example}
+\end{subfigure}
+\caption{QPSK, Strictly linear filter, $N_{users} = 4$, $N_t = N_r = 2$}
+\label{fig:test}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/sl_nu5_ber}
+  \caption{BER vs $E_b/N_o$} 
+  \label{fig:example}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/sl_nu5_bler}
+  \caption{BLER vs $E_b/N_o$}
+  \label{fig:example}
+\end{subfigure}
+\caption{QPSK, Strictly linear filter, $N_{users} = 5$, $N_t = N_r = 2$}
+\label{fig:test}
+\end{figure}
+
+% Widely linear filter
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/Wl_nu3_ber}
+  \caption{BER vs $E_b/N_o$} 
+  \label{fig:example}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/Wl_nu3_bler}
+  \caption{BLER vs $E_b/N_o$}
+  \label{fig:example}
+\end{subfigure}
+\caption{QPSK, Widely linear filter, $N_{users} = 3$, $N_t = N_r = 2$}
+\label{fig:test}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

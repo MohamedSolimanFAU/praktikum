@@ -81,7 +81,7 @@ check  = zeros(N_user, N_user, Scfdma.N);
 
 tic
 for i_ebNo = 1:length(EbNo)
-    count  = 2;
+    count  = 1;
     
     numBits    = zeros(1, N_user);
     bitError   = zeros(1, N_user);
@@ -99,6 +99,9 @@ for i_ebNo = 1:length(EbNo)
                 h_ch{i_user, j_user} = h_cell{count};
                 H_ch{i_user, j_user} = fft(h_cell{count}, Scfdma.N, 3);
                 count = count + 1;
+            end
+            if count > N_snapshot
+                count = 1;
             end
         end
         

@@ -118,6 +118,9 @@ for i_ebNo = 1:length(EbNo)
                 H_all{i_user, j_user} = [h_real -h_imag; h_imag h_real];
                 count = count + 1;
             end
+            if count > N_snapshot
+                count = 1;
+            end
         end
         
         % apply precoding

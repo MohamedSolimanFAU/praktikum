@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.10.22)  16 JAN 2018 17:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.10.22)  18 JAN 2018 18:20
 entering extended mode
 **report_template.tex
 (report_template.tex
@@ -653,6 +653,21 @@ LaTeX Warning: Label `sub@fig:example' multiply defined.
 
 LaTeX Warning: Label `fig:test' multiply defined.
 
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:example' multiply defined.
+
+
+LaTeX Warning: Label `fig:test' multiply defined.
+
 )
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
 LaTeX Font Info:    ... okay on input line 27.
@@ -901,6 +916,20 @@ File: figures/Wl_nu3_bler.jpg Graphic file (type jpg)
 Package pdftex.def Info: figures/Wl_nu3_bler.jpg used on input line 337.
 (pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
 
+<figures/Wl_nu4_ber.jpg, id=57, 1927.2pt x 966.61125pt>
+File: figures/Wl_nu4_ber.jpg Graphic file (type jpg)
+
+<use figures/Wl_nu4_ber.jpg>
+Package pdftex.def Info: figures/Wl_nu4_ber.jpg used on input line 349.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+
+<figures/Wl_nu4_bler.jpg, id=58, 1927.2pt x 966.61125pt>
+File: figures/Wl_nu4_bler.jpg Graphic file (type jpg)
+
+<use figures/Wl_nu4_bler.jpg>
+Package pdftex.def Info: figures/Wl_nu4_bler.jpg used on input line 355.
+(pdftex.def)             Requested size: 217.6621pt x 109.15942pt.
+
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
 
@@ -914,16 +943,17 @@ bler.jpg> <./figures/Wl_nu3_ber.jpg> <./figures/Wl_nu3_bler.jpg>]
 Overfull \vbox (0.77843pt too high) has occurred while \output is active []
 
 
-[10] (report_template.aux)
+[10 <./figures/Wl_nu4_ber.jpg> <./figures/Wl_nu4_bler.jpg>]
+(report_template.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14194 strings out of 493671
- 253086 string characters out of 3143855
- 381246 words of memory out of 3000000
- 17250 multiletter control sequences out of 15000+200000
+ 14204 strings out of 493671
+ 253333 string characters out of 3143855
+ 382248 words of memory out of 3000000
+ 17258 multiletter control sequences out of 15000+200000
  61370 words of font info for 97 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  57i,20n,100p,10353b,673s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -943,9 +973,9 @@ s/type1/public/lm/lmro12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm
 /lmssbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:
 /Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy6.pfb><C:/Program Files/MiK
 TeX 2.9/fonts/type1/public/lm/lmsy8.pfb>
-Output written on report_template.pdf (10 pages, 1534053 bytes).
+Output written on report_template.pdf (10 pages, 1838480 bytes).
 PDF statistics:
- 121 PDF objects out of 1000 (max. 8388607)
+ 123 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 19010 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 19020 words of extra memory for PDF output out of 20736 (max. 10000000)
 

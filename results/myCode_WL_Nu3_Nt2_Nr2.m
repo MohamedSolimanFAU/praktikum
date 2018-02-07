@@ -9,28 +9,23 @@
 % offset       :  offset of each channel for each user                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-clear variables; close all;
-clc;
-
 %% Variable initialization
 
-% SNR
-EbNo      = 20; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
-bits_per_symb  = [2 2 2 2];
+bits_per_symb  = [2 2 2];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 5000;
 type        = 'ITU-PA';
 N_snapshot  = 20000;
 Nr          = 2;
-Nt          = 4;
+Nt          = 2;
 
 start       = 1;
-offset      = [0 200 434 656 777] + start - 1; % starting point for
+offset      = [0 200 434 656] + start - 1; % starting point for
 
 % f = generate_channel(type, Nr, Nt, N_snapshot);
 load([ 'LTE_channel_' type '_Anz' num2str(N_snapshot) '_cell_NR' num2str(Nr) '_NT' num2str(Nt) '.mat' ]);
@@ -167,29 +162,8 @@ for i_ebNo = 1:length(EbNo)
     end
     BER(:, i_ebNo)  = bitError./numBits;
     BLER(:,i_ebNo)  = subframeError(:,i_ebNo)./numSubframes(:,i_ebNo);
+
+    mat_file_name = strcat('results/WL_Nu3_Nt2_Nr2_PA_SNR_', num2str(EbNo(i_ebNo)), '.mat');
+    save(mat_file_name , 'BER', 'BLER', 'bitError', 'N_user', 'n_ch', 'Nr', 'Nt', 'subframeError', 'numSubframes', 'i_ch');
 end
 toc
-%% Plotting BER
-
-% figure;
-% plot(tx_bits{1},'ro');
-% hold on
-% plot(rx_bits{1},'b*');
-% 
-% figure;
-% plot(tx_bits{2},'ro');
-% hold on
-% plot(rx_bits{2},'b*');
-
-
-
-figure;
-for i = 1:N_user
-    semilogy(EbNo, BER(i,:), 'o-', 'Linewidth', 2);
-    hold on;
-end
-title(['MIMO, ','Ch: "ITU-P', type, '", Snapshots = ', num2str(N_snapshot), ', Simulations = ', num2str(n_ch)]);
-xlabel('Eb/No(dB)');
-ylabel('BER')
-grid on;
-legend('User-1', 'User-2', 'User-3');

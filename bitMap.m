@@ -27,7 +27,8 @@ switch mod
         
         
         mappingVector = [1 -1];
-        display('ab hier keine BPSK-Unterstützung')
+%         display('ab hier keine BPSK-Unterstützung')
+        output = 2*c - 1;
     case 2 % bits per symbol (QPSK)
         % Initialization
         mappingVector = 0;

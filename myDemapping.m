@@ -2,14 +2,24 @@ function [ output ] = myDemapping( c,mod )
 %MYDEMAPPING Summary of this function goes here
 %   Detailed explanation goes here
 
+j = 1;
 switch mod
+    case 1
+        for i = 1:length(c)
+            if real(c(i)) >= 0 
+                output(j) = 1;
+            else
+                output(j) = 0;
+            end
+            j = j + 1;
+        end
     case 2 % QPSK
         % Mapping 
         % 00 -> 1+1i
         % 01 -> +1-1i
         % 10 -> -1+1i
         % 11 -> -1-1i
-        j = 1;
+        
         for i = 1:length(c)
             if real(c(i)) >= 0 && imag(c(i)) >= 0
                 output(j:j+1) = [0 0];

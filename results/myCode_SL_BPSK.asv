@@ -15,7 +15,7 @@
 %% Variable initialization
 
 % SNR
-EbNo      = 0:5:25; % in dB
+% EbNo      = 0:5:25; % in dB
 EbNo_lin  = 10.^(EbNo./10);
 
 % User specific parameters
@@ -23,7 +23,7 @@ bits_per_symb  = [1 1 1];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 1;
+n_ch        = 5000;
 type        = 'ITU-PA';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -103,9 +103,7 @@ for i_ebNo = 1:length(EbNo)
             for j_user = 1:N_user
                 h_ch{i_user, j_user} = h_cell{count};
                 H_ch{i_user, j_user} = fft(h_cell{count}, Scfdma.N, 3);
-                if count > 19900
-                    count = 1;
-                end
+                if count 
                 count = count + 1;
             end
         end

@@ -23,7 +23,7 @@ bits_per_symb  = [1 1 1];
 N_user         = length(bits_per_symb); % Number of transmitter-receiver pairs
 
 % Channel parameters
-n_ch        = 10;
+n_ch        = 100;
 type        = 'ITU-PA';
 N_snapshot  = 20000;
 Nr          = 2;
@@ -110,12 +110,12 @@ for i_ebNo = 1:length(EbNo)
         [V, G] = myPrecoding(H_ch, VarN(:, i_ebNo), Scfdma.N);
         for i = 1:Scfdma.N
             for i_user = 1:N_user
-                for j_user = 1:N_user 
+                for j_user = 1:N_user
                     check(i_user, j_user, i) = G{i_user}(:,:,i)' * H_ch{i_user, j_user}(:,:,i) * V{i_user}(:,:,i);
                 end
             end
         end
-               
+        
         for i_user = 1:N_user
             tx_sc{i_user} = scfdma_tx(tx{i_user}, Scfdma, V{i_user});
         end
@@ -133,7 +133,7 @@ for i_ebNo = 1:length(EbNo)
         for i_user = 1:N_user
             rx{i_user}       = scfdma_rx(rx_sc{i_user}, Scfdma, G{i_user});
             rx_bits{i_user}  = myDemapping(rx{i_user}, bits_per_symb(i_user));
-%             [rx_bits{i_user}, temp]  = bitDemap(rx{i_user}, bits_per_symb(i_user), VarN(i_user, i_ebNo));
+            %             [rx_bits{i_user}, temp]  = bitDemap(rx{i_user}, bits_per_symb(i_user), VarN(i_user, i_ebNo));
             
             bitError(1, i_user)    = bitError(1, i_user) + sum(xor(tx_bits{i_user}, rx_bits{i_user}));
             numBits(1, i_user)     = numBits(1, i_user) + length(rx_bits{i_user});
@@ -142,16 +142,20 @@ for i_ebNo = 1:length(EbNo)
         end
         subframeError_new        = new_bitError > 0;
         subframeError(:, i_ebNo) = subframeError(:, i_ebNo) + subframeError_new;
+        
+        BER(:, i_ebNo)  = bitError./numBits;
+        BLER(:,i_ebNo)  = subframeError(:,i_ebNo)./numSubframes(:,i_ebNo);
+        
+        mat_file_name = strcat('results/test_', num2str(EbNo(i_ebNo)), '.mat');
+        save(mat_file_name , 'BER', 'BLER', 'bitError', 'N_user', 'n_ch', 'Nr', 'Nt', 'subframeError', 'numSubframes', 'i_ch');
     end
-    BER(:, i_ebNo)  = bitError./numBits;
-    BLER(:,i_ebNo)  = subframeError(:,i_ebNo)./numSubframes(:,i_ebNo);
 end
 toc
 
 %% Plotting BER
 % figure;
 % plot(rx{1}); hold on; plot(tx{1});
-% 
+%
 % figure;
 % plot(rx{2}); hold on; plot(tx{2});
 

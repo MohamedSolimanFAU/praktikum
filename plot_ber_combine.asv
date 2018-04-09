@@ -14,7 +14,7 @@ end
 
 figure;
 for i = 1:N_user
-    semilogy(SNR, ber(i,:), 'o-', 'Linewidth', 2);
+    semilogy(SNR, bler(i,:)/800, 'o-', 'Linewidth', 2);
     hold on;
 end
 xlabel('Eb/No(dB)');
@@ -33,14 +33,14 @@ for n = 1:length(SNR)
 end
 
 for i = 1:N_user
-    semilogy(SNR, ber(i,:), 'o--', 'Linewidth', 2);
+    semilogy(SNR, bler(i,:)/800, 'o--', 'Linewidth', 2);
     hold on;
 end
 xlabel('Eb/No(dB)');
 ylabel('BER')
 grid on;
 legend('SL-User1', 'SL-User2', 'SL-User3', 'WL-User1', 'WL-User2', 'WL-User3');
-title(['ITU-PA, ', 'BER for BPSK', ', Nusers = 3']);
+title(['ITU-PA, ', 'BLER for BPSK ', 'Nusers = 3']);
 
 % figure;
 % for i = 1:N_user
